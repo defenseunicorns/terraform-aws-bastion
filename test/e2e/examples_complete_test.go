@@ -4,6 +4,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"testing"
+	"time"
 )
 
 func TestExamplesComplete(t *testing.T) {
@@ -12,6 +13,11 @@ func TestExamplesComplete(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: tempFolder,
 		Upgrade:      false,
+		RetryableTerraformErrors: map[string]string{
+			".*empty output.*": "bug in aws_s3_bucket_logging, intermittent error",
+		},
+		MaxRetries:         5,
+		TimeBetweenRetries: 5 * time.Second,
 		Vars: map[string]interface{}{
 			"name_prefix": "ci-",
 			"region":      "us-east-1",
