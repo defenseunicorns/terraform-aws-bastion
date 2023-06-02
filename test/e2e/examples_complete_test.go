@@ -23,7 +23,7 @@ func TestExamplesComplete(t *testing.T) {
 			"region":      "us-east-1",
 			"tags": map[string]string{
 				"ManagedBy": "Terraform",
-				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-vpc",
+				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-bastion",
 			},
 		},
 	}
