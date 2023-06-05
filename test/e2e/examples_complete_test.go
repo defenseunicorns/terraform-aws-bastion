@@ -19,11 +19,11 @@ func TestExamplesComplete(t *testing.T) {
 		MaxRetries:         5,
 		TimeBetweenRetries: 5 * time.Second,
 		Vars: map[string]interface{}{
-			"name_prefix": "ci-",
+			"name_prefix": "ci",
 			"region":      "us-east-1",
 			"tags": map[string]string{
 				"ManagedBy": "Terraform",
-				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-vpc",
+				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-bastion",
 			},
 		},
 	}
