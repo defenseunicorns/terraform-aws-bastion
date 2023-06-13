@@ -71,3 +71,9 @@ variable "enable_sqs_events_on_access_log_access" {
   type        = bool
   default     = false
 }
+
+variable "private_ip" {
+  description = "The private IP address to assign to the bastion"
+  type        = string
+  default     = ""
+}

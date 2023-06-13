@@ -57,6 +57,12 @@ variable "allowed_public_ips" {
   default     = []
 }
 
+variable "private_ip" {
+  type        = string
+  description = "The private IP address to assign to the bastion"
+  default     = null
+}
+
 variable "ami_name_filter" {
   type        = string
   description = "Filter for AMI using this name. Accepts wildcards"
