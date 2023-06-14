@@ -47,6 +47,7 @@ resource "aws_instance" "application" {
   associate_public_ip_address = var.assign_public_ip
   monitoring                  = true
   tenancy                     = var.tenancy
+  private_ip                  = var.private_ip
   root_block_device {
     volume_size = var.root_volume_config.volume_size
     volume_type = var.root_volume_config.volume_type

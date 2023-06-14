@@ -255,8 +255,10 @@ module "bastion" {
   assign_public_ip               = false
   enable_log_to_s3               = true
   enable_log_to_cloudwatch       = true
-  tenancy                        = var.bastion_tenancy
-  zarf_version                   = var.zarf_version
-  permissions_boundary           = var.iam_role_permissions_boundary
-  tags                           = var.tags
+  private_ip                     = var.private_ip != "" ? var.private_ip : null
+
+  tenancy              = var.bastion_tenancy
+  zarf_version         = var.zarf_version
+  permissions_boundary = var.iam_role_permissions_boundary
+  tags                 = var.tags
 }
