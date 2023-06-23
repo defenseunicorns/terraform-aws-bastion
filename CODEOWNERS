@@ -1,2 +1,2 @@
 * @defenseunicorns/uds
-*.tf defenseunicorns/delivery-aws-iac
+*.tf @defenseunicorns/delivery-aws-iac
