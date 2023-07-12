@@ -436,9 +436,7 @@ resource "aws_iam_policy" "terraform_policy" {
         },
         {
             "Action": [
-                "aws-portal:*Billing",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutAccountPublicAccessBlock"
+                "aws-portal:*Billing"
             ],
             "Resource": "*",
             "Effect": "Deny"
