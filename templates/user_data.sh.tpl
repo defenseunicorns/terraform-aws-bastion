@@ -27,8 +27,15 @@ else
     chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh/config
 fi
 
-# Install unzip git & docker to support aws cli v2 installation & zarf
-sudo yum install unzip docker git -y
+# Install needed tools
+# TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
+sudo yum install -y \
+  amazon-cloudwatch-agent
+  docker \
+  git \
+  jq \
+  unzip \
+  wget
 
 sudo yum update -y
 
@@ -52,25 +59,12 @@ wget -O /home/${ssh_user}/zarf-init-amd64-${zarf_version}.tar.zst https://github
 chmod +x /home/${ssh_user}/zarf
 chown -R ${ssh_user}:${ssh_user} /home/${ssh_user}/
 
-
-
-#!/bin/bash
-
-# Install Amazon CloudWatch Agent
-sudo yum -y install amazon-cloudwatch-agent
-
 # Create the /usr/share/collectd directory and types.db file
 sudo mkdir -p /usr/share/collectd
 sudo touch /usr/share/collectd/types.db
 
 # Fetch the configuration from the SSM parameter store
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux-${ssm_parameter_name} -s
-
-# Install required add-ons
-sudo yum -y install jq
-sudo yum -y install aws-cli
-sudo yum -y install wget
-
 
  ###StartUpScript###
 
