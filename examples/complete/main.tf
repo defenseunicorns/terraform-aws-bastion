@@ -17,6 +17,7 @@ locals {
 }
 
 module "vpc" {
+  # checkov:skip=CKV_TF_1: "Ensure Terraform module sources use a commit hash" -- We've decided to use tags rather than a hash
   source = "git::https://github.com/defenseunicorns/terraform-aws-uds-vpc.git?ref=v0.0.2-alpha"
 
   name                  = local.vpc_name
@@ -69,6 +70,7 @@ resource "aws_kms_alias" "default" {
 data "aws_iam_policy_document" "kms_access" {
   # checkov:skip=CKV_AWS_111: todo reduce perms on key
   # checkov:skip=CKV_AWS_109: todo be more specific with resources
+  # checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions" -- TODO: Be more specific with resources
   statement {
     sid = "KMS Key Default"
     principals {

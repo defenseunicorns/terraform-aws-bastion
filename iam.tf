@@ -54,6 +54,7 @@ resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-efs-policy-attach" {
 # Create S3/CloudWatch Logs access document, policy and attach to role
 data "aws_iam_policy_document" "ssm_s3_cwl_access" {
   # checkov:skip=CKV_AWS_111: ADD REASON
+  # checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions" -- TODO: Make this policy more least-privilege-y
   # A custom policy for S3 bucket access
   # https://docs.aws.amazon.com/en_us/systems-manager/latest/userguide/setup-instance-profile.html#instance-profile-custom-s3-policy
   statement {
@@ -261,6 +262,7 @@ resource "aws_iam_policy" "terraform_policy" {
   # checkov:skip=CKV_AWS_109: TODO: Fix CKV_AWS_289. It is identical to this policy.
   # checkov:skip=CKV_AWS_290: TODO: Tighten this policy up. It currently allows actions that can be used to for resource exposure without constraint. Ref: https://docs.bridgecrew.io/docs/ensure-iam-policies-do-not-allow-write-access-without-constraint
   # checkov:skip=CKV_AWS_111: TODO: Fix CKV_AWS_290. It is identical to this policy.
+  # checkov:skip=CKV_AWS_355: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions" -- TODO: Update this policy to be more least-priviledge-y
 
   count = var.enable_bastion_terraform_permissions ? 1 : 0
 
