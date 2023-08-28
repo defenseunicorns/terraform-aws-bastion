@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.4...v0.0.5) (2023-08-28)
+
+
+### Features
+
+* install Zarf to /usr/local/bin so that it appears on $PATH ([#43](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/43)) ([71b0cc0](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/71b0cc038c96569ac22541ba1bdd70c30ea828f3))
+
 ## 0.0.4 (2023-08-28)
 
 
