@@ -57,6 +57,8 @@ curl -s https://fluxcd.io/install.sh | sudo bash
 wget -O /home/${ssh_user}/zarf https://github.com/defenseunicorns/zarf/releases/download/${zarf_version}/zarf_${zarf_version}_Linux_amd64
 wget -O /home/${ssh_user}/zarf-init-amd64-${zarf_version}.tar.zst https://github.com/defenseunicorns/zarf/releases/download/${zarf_version}/zarf-init-amd64-${zarf_version}.tar.zst
 chmod +x /home/${ssh_user}/zarf
+cp /home/${ssh_user}/zarf /usr/local/bin/zarf
+cp /home/${ssh_user}/zarf-init-amd64-${zarf_version}.tar.zst /usr/local/bin/zarf-init-amd64-${zarf_version}.tar.zst
 chown -R ${ssh_user}:${ssh_user} /home/${ssh_user}/
 
 # Create the /usr/share/collectd directory and types.db file
