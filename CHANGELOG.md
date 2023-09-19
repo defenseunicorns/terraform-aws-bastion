@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.6](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.5...v0.0.6) (2023-09-19)
+
+
+### Miscellaneous Chores
+
+* add ability to use update chatops command ([#46](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/46)) ([7db86d3](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/7db86d3b008560a87efd5713a37ef1c87a1a0c95))
+* add missing autoformat makefile target ([#50](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/50)) ([9697f8f](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/9697f8f7d567d424d77255d42aeed9f1fc3e62a2))
+* Delete .tool-versions file ([#49](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/49)) ([c110a7a](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/c110a7a6302aa48974e8e9b98951063b83f8bbf2))
+* **deps:** update all dependencies ([#34](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/34)) ([b12c8e1](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/b12c8e1a6282b38b534bef84eaab133f428ba63c))
+
 ## [0.0.5](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.4...v0.0.5) (2023-08-28)
 
 
