@@ -62,7 +62,7 @@ _test-all: _create-folders
 		-e SKIP_TEARDOWN \
 		${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} \
 		bash -c 'git config --global --add safe.directory /app \
-			&& asdf install && cd examples/complete \
+			cd examples/complete \
 			&& terraform init -upgrade=true \
 			&& cd ../../test/e2e \
 			&& go test -count 1 -v $(EXTRA_TEST_ARGS) .'
@@ -102,7 +102,7 @@ _runhooks: _create-folders
 		-e "SKIP=$(SKIP)" \
 		-e "PRE_COMMIT_HOME=/app/.cache/pre-commit" \
 		${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} \
-		bash -c 'git config --global --add safe.directory /app && asdf install && pre-commit run -a --show-diff-on-failure $(HOOK)'
+		bash -c 'git config --global --add safe.directory /app && pre-commit run -a --show-diff-on-failure $(HOOK)'
 
 .PHONY: pre-commit-all
 pre-commit-all: ## Run all pre-commit hooks. Returns nonzero exit code if any hooks fail. Uses Docker for maximum compatibility
