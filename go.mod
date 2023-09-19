@@ -1,8 +1,8 @@
 module github.com/defenseunicorns/terraform-aws-uds-bastion
 
-go 1.20
+go 1.21.1
 
-require github.com/gruntwork-io/terratest v0.43.8
+require github.com/gruntwork-io/terratest v0.44.0
 
 require (
 	cloud.google.com/go v0.107.0 // indirect
