@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.8](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.6...v0.0.8) (2023-09-21)
+
+
+### Bug Fixes
+
+* move zarf from /usr/local/bin to /usr/bin, which is in root's PATH ([#55](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/55)) ([55c90ac](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/55c90ac2c6d65b48c26567a322f4dbfc17d98ff0))
+* require aws provider 4.9.0 or better due to s3 bucket deletion issue ([#51](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/51)) ([ff68809](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/ff6880985547082ebc6a7055e7d79e8c807211dd))
+
+
+### Miscellaneous Chores
+
+* release 0.0.8 ([3caeb06](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/3caeb0611eca49415e9719f8f6bfe170af222374))
+
 ## [0.0.6](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.5...v0.0.6) (2023-09-19)
 
 
