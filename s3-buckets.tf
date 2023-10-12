@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "cloudwatch-policy" {
       variable = "AWS:SourceArn"
 
       values = [
-        "arn:aws:cloudtrail:${var.aws_region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
+        "arn:aws:cloudtrail:${var.region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
       ]
     }
   }
@@ -70,14 +70,14 @@ data "aws_iam_policy_document" "cloudwatch-policy" {
       variable = "AWS:SourceArn"
 
       values = [
-        "arn:aws:cloudtrail:${var.aws_region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
+        "arn:aws:cloudtrail:${var.region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
       ]
     }
   }
 }
 
 resource "aws_s3_bucket_policy" "cloudwatch-s3-policy" {
-  bucket = aws_s3_bucket.access_logs_bucket.bucket
+  bucket = data.aws_s3_bucket.access_logs_bucket.id
   policy = data.aws_iam_policy_document.cloudwatch-policy.json
 
 }

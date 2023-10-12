@@ -11,7 +11,7 @@ resource "aws_cloudtrail" "ssh_access" {
   # checkov:skip=CKV2_AWS_10: Cloudwatch logs already being used with cloudtrail
   name                       = "ssh_access"
   s3_bucket_name             = var.access_logs_bucket_name
-  kms_key_id                 = aws_kms_key.ssmkey.arn
+  kms_key_id                 = data.aws_kms_key.default.arn
   is_multi_region_trail      = true
   enable_log_file_validation = true
   event_selector {
@@ -20,7 +20,6 @@ resource "aws_cloudtrail" "ssh_access" {
   }
   depends_on = [
     aws_s3_bucket_policy.cloudwatch-s3-policy,
-    aws_kms_key.ssmkey,
     aws_cloudwatch_log_group.ssh_access_log_group
   ]
 }
