@@ -5,6 +5,26 @@ resource "aws_cloudwatch_log_group" "ssh_access_log_group" {
   kms_key_id        = data.aws_kms_key.default.arn
 }
 
+# Create a cloudtrail and event rule to monitor bastion access over ssh
+resource "aws_cloudtrail" "ssh_access" {
+  # checkov:skip=CKV_AWS_252: SNS not currently needed
+  # checkov:skip=CKV2_AWS_10: Cloudwatch logs already being used with cloudtrail
+  name                       = "ssh_access"
+  s3_bucket_name             = var.access_logs_bucket_name
+  kms_key_id                 = aws_kms_key.ssmkey.arn
+  is_multi_region_trail      = true
+  enable_log_file_validation = true
+  event_selector {
+    read_write_type           = "All"
+    include_management_events = true
+  }
+  depends_on = [
+    aws_s3_bucket_policy.cloudwatch-s3-policy,
+    aws_kms_key.ssmkey,
+    aws_cloudwatch_log_group.ssh_access_log_group"
+  ]
+}
+
 resource "aws_cloudwatch_event_rule" "ssh_access" {
   name        = "${var.name}-ssh-access"
   description = "filters ssm access logs and sends usable data to a cloudwatch log group"

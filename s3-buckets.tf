@@ -10,6 +10,78 @@ resource "aws_s3_bucket" "session_logs_bucket" {
 
 }
 
+data "aws_iam_policy_document" "cloudwatch-policy" {
+
+  statement {
+    sid    = "AWSCloudTrailAclCheck"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetBucketAcl",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.access_logs_bucket_name}",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:aws:cloudtrail:${var.aws_region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
+      ]
+    }
+  }
+
+  statement {
+    sid    = "AWSCloudTrailWrite"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:PutObject",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.access_logs_bucket_name}/*",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+
+      values = [
+        "bucket-owner-full-control",
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:aws:cloudtrail:${var.aws_region}:${data.aws_caller_identity.current.account_id}:trail/ssh-access",
+      ]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "cloudwatch-s3-policy" {
+  bucket = aws_s3_bucket.access_logs_bucket.bucket
+  policy = data.aws_iam_policy_document.cloudwatch-policy.json
+
+}
+
 resource "aws_s3_bucket_logging" "access_logging_on_session_logs_bucket" {
   bucket = aws_s3_bucket.session_logs_bucket.id
 
