@@ -21,7 +21,7 @@ resource "aws_cloudtrail" "ssh_access" {
   depends_on = [
     aws_s3_bucket_policy.cloudwatch-s3-policy,
     aws_kms_key.ssmkey,
-    aws_cloudwatch_log_group.ssh_access_log_group"
+    aws_cloudwatch_log_group.ssh_access_log_group
   ]
 }
 
