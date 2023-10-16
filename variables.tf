@@ -149,11 +149,11 @@ variable "permissions_boundary" {
 
 #### S3 Bucket
 
-variable "session_log_bucket_name_prefix" {
+variable "session_logs_bucket_name_prefix" {
   description = "Name prefix of S3 bucket to store session logs"
   type        = string
   validation {
-    condition     = length(var.session_log_bucket_name_prefix) <= 37
+    condition     = length(var.session_logs_bucket_name_prefix) <= 37
     error_message = "Bucket name prefixes may not be longer than 37 characters."
   }
 }

@@ -117,7 +117,7 @@ No modules.
 | <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | n/a | yes |
 | <a name="input_root_volume_config"></a> [root\_volume\_config](#input\_root\_volume\_config) | n/a | <pre>object({<br>    volume_type = any<br>    volume_size = any<br>  })</pre> | <pre>{<br>  "volume_size": "20",<br>  "volume_type": "gp3"<br>}</pre> | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of security groups to associate with instance | `list(any)` | `[]` | no |
-| <a name="input_session_log_bucket_name_prefix"></a> [session\_log\_bucket\_name\_prefix](#input\_session\_log\_bucket\_name\_prefix) | Name prefix of S3 bucket to store session logs | `string` | n/a | yes |
+| <a name="input_session_logs_bucket_name_prefix"></a> [session\_log\_bucket\_name\_prefix](#input\_session\_log\_bucket\_name\_prefix) | Name prefix of S3 bucket to store session logs | `string` | n/a | yes |
 | <a name="input_ssh_password"></a> [ssh\_password](#input\_ssh\_password) | Password for SSH access if SSM authentication is enabled | `string` | n/a | yes |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Username to use when accessing the instance using SSH | `string` | `"ubuntu"` | no |
 | <a name="input_ssm_enabled"></a> [ssm\_enabled](#input\_ssm\_enabled) | Enable SSM agent | `bool` | `true` | no |

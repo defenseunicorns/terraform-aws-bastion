@@ -9,7 +9,7 @@ resource "aws_s3_bucket_policy" "cloudwatch-s3-policy" {
 # Create S3 bucket for session logs with versioning, encryption, blocked public access enabled
 resource "aws_s3_bucket" "session_logs_bucket" {
   # checkov:skip=CKV_AWS_144: Cross region replication overkill
-  bucket_prefix = "${var.session_log_bucket_name_prefix}-"
+  bucket_prefix = "${var.session_logs_bucket_name_prefix}-"
   force_destroy = true
   tags          = var.tags
 
