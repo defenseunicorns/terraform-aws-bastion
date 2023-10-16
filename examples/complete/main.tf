@@ -10,7 +10,7 @@ locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name                       = "${var.name_prefix}-${lower(random_id.default.hex)}"
   bastion_name                   = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
-  access_log_bucket_name_prefix  = "${var.name_prefix}-accesslog-${lower(random_id.default.hex)}"
+  access_logs_bucket_name_prefix  = "${var.name_prefix}-accesslog-${lower(random_id.default.hex)}"
   session_log_bucket_name_prefix = "${var.name_prefix}-bastionsessionlog-${lower(random_id.default.hex)}"
   kms_key_alias_name_prefix      = "alias/${var.name_prefix}-${lower(random_id.default.hex)}"
   access_log_sqs_queue_name      = "${var.name_prefix}-accesslog-access-${lower(random_id.default.hex)}"
@@ -123,31 +123,31 @@ data "aws_iam_policy_document" "kms_access" {
 
 
 # Create S3 bucket for access logs with versioning, encryption, blocked public access enabled
-resource "aws_s3_bucket" "access_log_bucket" {
+resource "aws_s3_bucket" "access_logs_bucket" {
   # checkov:skip=CKV_AWS_144: Cross region replication is overkill
   # checkov:skip=CKV_AWS_18: "Ensure the S3 bucket has access logging enabled" -- This is the access logging bucket. Logging to the logging bucket would cause an infinite loop.
-  bucket_prefix = local.access_log_bucket_name_prefix
+  bucket_prefix = local.access_logs_bucket_name_prefix
   force_destroy = true
   tags          = var.tags
 
   lifecycle {
     precondition {
-      condition     = length(local.access_log_bucket_name_prefix) <= 37
+      condition     = length(local.access_logs_bucket_name_prefix) <= 37
       error_message = "Bucket name prefixes may not be longer than 37 characters."
     }
   }
 }
 
-resource "aws_s3_bucket_versioning" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
+resource "aws_s3_bucket_versioning" "access_logs_bucket" {
+  bucket = aws_s3_bucket.access_logs_bucket.id
 
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
+resource "aws_s3_bucket_server_side_encryption_configuration" "access_logs_bucket" {
+  bucket = aws_s3_bucket.access_logs_bucket.id
 
   rule {
     apply_server_side_encryption_by_default {
@@ -157,16 +157,16 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "access_log_bucket
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "access_log_bucket" {
-  bucket                  = aws_s3_bucket.access_log_bucket.id
+resource "aws_s3_bucket_public_access_block" "access_logs_bucket" {
+  bucket                  = aws_s3_bucket.access_logs_bucket.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
+resource "aws_s3_bucket_lifecycle_configuration" "access_logs_bucket" {
+  bucket = aws_s3_bucket.access_logs_bucket.id
 
   rule {
     id     = "delete_after_X_days"
@@ -204,7 +204,7 @@ resource "aws_sqs_queue" "access_log_queue" {
       "Action": "sqs:SendMessage",
       "Resource": "arn:${data.aws_partition.current.partition}:sqs:*:*:${local.access_log_sqs_queue_name}",
       "Condition": {
-        "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.access_log_bucket.arn}" }
+        "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.access_logs_bucket.arn}" }
       }
     }
   ]
@@ -212,9 +212,9 @@ resource "aws_sqs_queue" "access_log_queue" {
 POLICY
 }
 
-resource "aws_s3_bucket_notification" "access_log_bucket_notification" {
+resource "aws_s3_bucket_notification" "access_logs_bucket_notification" {
   count  = var.enable_sqs_events_on_access_log_access ? 1 : 0
-  bucket = aws_s3_bucket.access_log_bucket.id
+  bucket = aws_s3_bucket.access_logs_bucket.id
 
   queue {
     queue_arn = aws_sqs_queue.access_log_queue[0].arn
@@ -249,7 +249,7 @@ module "bastion" {
   vpc_id                         = module.vpc.vpc_id
   subnet_id                      = module.vpc.private_subnets[0]
   region                         = var.region
-  access_logs_bucket_name        = aws_s3_bucket.access_log_bucket.id
+  access_logs_bucket_name        = aws_s3_bucket.access_logs_bucket.id
   session_log_bucket_name_prefix = local.session_log_bucket_name_prefix
   kms_key_arn                    = aws_kms_key.default.arn
   ssh_user                       = var.bastion_ssh_user
