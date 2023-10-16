@@ -51,6 +51,72 @@ resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-efs-policy-attach" {
   policy_arn = data.aws_iam_policy.AmazonElasticFileSystemFullAccess.arn
 }
 
+data "aws_iam_policy_document" "cloudwatch-policy" {
+
+  statement {
+    sid    = "AWSCloudTrailAclCheck"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetBucketAcl",
+    ]
+
+    resources = [
+      aws_s3_bucket.access_logs_bucket.arn
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:${data.aws_partition.current.partition}:cloudtrail:${var.region}:${data.aws_caller_identity.current.account_id}:trail/${var.name}-ssh-access",
+      ]
+    }
+  }
+
+  statement {
+    sid    = "AWSCloudTrailWrite"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:PutObject",
+    ]
+
+    resources = [
+      "arn:${data.aws_partition.current.partition}:s3:::${aws_s3_bucket.access_logs_bucket.id}/*",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+
+      values = [
+        "bucket-owner-full-control",
+      ]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+
+      values = [
+        "arn:${data.aws_partition.current.partition}:cloudtrail:${var.region}:${data.aws_caller_identity.current.account_id}:trail/${var.name}-ssh-access",
+      ]
+    }
+  }
+}
+
 # Create S3/CloudWatch Logs access document, policy and attach to role
 data "aws_iam_policy_document" "ssm_s3_cwl_access" {
   # checkov:skip=CKV_AWS_111: ADD REASON

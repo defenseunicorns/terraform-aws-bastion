@@ -1,6 +1,12 @@
 #####################################################
 ##################### S3 Bucket #####################
 
+resource "aws_s3_bucket_policy" "cloudwatch-s3-policy" {
+  bucket = aws_s3_bucket.access_logs_bucket.bucket
+  policy = data.aws_iam_policy_document.cloudwatch-policy.json
+
+}
+
 # Create S3 bucket for session logs with versioning, encryption, blocked public access enabled
 resource "aws_s3_bucket" "session_logs_bucket" {
   # checkov:skip=CKV_AWS_144: Cross region replication overkill
