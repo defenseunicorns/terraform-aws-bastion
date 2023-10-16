@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "cloudwatch-policy" {
     ]
 
     resources = [
-      aws_s3_bucket.access_logs_bucket.arn
+      data.aws_s3_bucket.access_logs_bucket.arn
     ]
 
     condition {
@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "cloudwatch-policy" {
     ]
 
     resources = [
-      "arn:${data.aws_partition.current.partition}:s3:::${aws_s3_bucket.access_logs_bucket.id}/*",
+      "arn:${data.aws_partition.current.partition}:s3:::${data.aws_s3_bucket.access_logs_bucket.id}/*",
     ]
 
     condition {
