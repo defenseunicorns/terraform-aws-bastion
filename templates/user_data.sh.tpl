@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
 
+# TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
+echo "installing tools"
+
+sudo yum install -y \
+  amazon-cloudwatch-agent \
+  docker \
+  git \
+  jq \
+  unzip \
+  wget
+
+sudo yum update -y
+
 ##
 ## Enable SSM & SSH
 ##
@@ -26,18 +39,6 @@ else
     chmod 600 /home/${ssh_user}/.ssh/config
     chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh/config
 fi
-
-# Install needed tools
-# TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
-sudo yum install -y \
-  amazon-cloudwatch-agent
-  docker \
-  git \
-  jq \
-  unzip \
-  wget
-
-sudo yum update -y
 
 # Install newer version of aws cli
 sudo yum remove awscli -y
@@ -80,7 +81,7 @@ sudo cat << '_EOF_' > /etc/profile.d/startupscript.sh
     {
         ###Configuration Options
         MAX_SESSIONS=1  #Number of maximum sessions allowed
-        TERMINATE_SESSIONS=false #This will terminate the sessions starting from the oldest; if set to false, it will list out the sessions IDs, but not terminate them
+        TERMINATE_SESSIONS=true #This will terminate the sessions starting from the oldest; if set to false, it will list out the sessions IDs, but not terminate them
         TERMINATE_OLDEST=false #true/false - if true, script will terminate the oldest session first. if false, the newest session will be terminated.
         #Terminating the newest session may result in poor experiance as there will be no message provided to the user.
 
