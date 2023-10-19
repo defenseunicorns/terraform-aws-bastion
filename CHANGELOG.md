@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.9](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.8...v0.0.9) (2023-10-19)
+
+
+### Bug Fixes
+
+* fix missing backslash in userdata script ([adae12c](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/adae12c69f5842baeda424c41054500b95323f97))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#56](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/56)) ([cfe4419](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/cfe4419a2b4cde4cf57f891a11df7308358eff73))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v36.107.1 ([#58](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/58)) ([6995cb6](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/6995cb69e69e9ee4d9441a6afe0701393afba4ec))
+
 ## [0.0.8](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.6...v0.0.8) (2023-09-21)
 
 
