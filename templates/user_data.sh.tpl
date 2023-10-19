@@ -30,7 +30,7 @@ fi
 # Install needed tools
 # TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
 sudo yum install -y \
-  amazon-cloudwatch-agent
+  amazon-cloudwatch-agent \
   docker \
   git \
   jq \
