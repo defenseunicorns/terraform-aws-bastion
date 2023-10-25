@@ -34,9 +34,12 @@ _create-folders:
 
 .PHONY: _test-all
 _test-all: _create-folders
-	echo "Running automated tests. This will take several minutes. At times it may not log anything to the console. If you interrupt the test run you will need to log into AWS console and manually delete any orphaned infrastructure."
-	# Developer note: If sshuttle is to be used, --cap-add=NET_ADMIN and --cap-add=NET_RAW need to be added to the below docker run command
+	# import any TF_VAR_ environment variables into the docker container.
+	echo "Running automated tests. This will take several minutes. At times it does not log anything to the console. If you interrupt the test run you will need to log into AWS console and manually delete any orphaned infrastructure.";\
+	TF_VARS=$$(env | grep '^TF_VAR_' | awk -F= '{printf "-e %s ", $$1}'); \
 	docker run $(TTY_ARG) --rm \
+		--cap-add=NET_ADMIN \
+		--cap-add=NET_RAW \
 		-v "${PWD}:/app" \
 		-v "${PWD}/.cache/tmp:/tmp" \
 		-v "${PWD}/.cache/go:/root/go" \
@@ -60,21 +63,23 @@ _test-all: _create-folders
 		-e SKIP_SETUP \
 		-e SKIP_TEST \
 		-e SKIP_TEARDOWN \
+		$${TF_VARS} \
 		${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} \
-		bash -c 'git config --global --add safe.directory /app \
-			&& cd examples/complete \
-			&& terraform init -upgrade=true \
-			&& cd ../../test/e2e \
-			&& go test -count 1 -v $(EXTRA_TEST_ARGS) .'
+		bash -c 'git config --global --add safe.directory /app && cd examples/complete && terraform init -upgrade=true && cd ../../test/e2e && go test -count 1 -v $(EXTRA_TEST_ARGS) .'
 
 .PHONY: test
 test: ## Run all automated tests. Requires access to an AWS account. Costs real money.
-	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h"
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 3h"
 
-# Example of how to run a single test only
-#.PHONY: test-complete-foo
-#test-complete-foo: ## Run one test (TestExamplesCompleteFoo). Requires access to an AWS account. Costs real money.
-#	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h -run TestExamplesCompleteFoo"
+.PHONY: test-ci-complete
+test-ci-complete: ## Run one test (TestExamplesCompleteCommon). Requires access to an AWS account. Costs real money.
+	$(eval export TF_VAR_region := $(or $(REGION),$(TF_VAR_region),us-east-2))
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 3h -run TestExamplesCompleteCommon"
+
+.PHONY: test-complete-plan-only
+test-complete-plan-only: ## Run one test (TestExamplesCompletePlanOnly). Requires access to an AWS account. It will not cost money or create any resources since it is just running `terraform plan`.
+	$(eval export TF_VAR_region := $(or $(REGION),$(TF_VAR_region),us-east-2))
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h -run TestExamplesCompletePlanOnly"
 
 .PHONY: docker-save-build-harness
 docker-save-build-harness: _create-folders ## Pulls the build harness docker image and saves it to a tarball
@@ -129,5 +134,5 @@ fix-cache-permissions: ## Fixes the permissions on the pre-commit cache
 	docker run $(TTY_ARG) --rm -v "${PWD}:/app" --workdir "/app" -e "PRE_COMMIT_HOME=/app/.cache/pre-commit" ${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} chmod -R a+rx .cache
 
 .PHONY: autoformat
-autoformat: ## [Docker] Autoformat all files
+autoformat: ## Update files with automatic formatting tools. Uses Docker for maximum compatibility.
 	$(MAKE) _runhooks HOOK="" SKIP="check-added-large-files,check-merge-conflict,detect-aws-credentials,detect-private-key,check-yaml,golangci-lint,terraform_checkov,terraform_tflint,renovate-config-validator"
