@@ -350,6 +350,7 @@ resource "aws_iam_policy" "terraform_policy" {
                 "inspector:SubscribeToEvent",
                 "inspector:UnsubscribeFromEvent",
                 "inspector:UpdateAssessmentTarget"
+                "secretsmanager:GetSecretValue"
             ],
             "Resource": "*",
             "Effect": "Allow"
