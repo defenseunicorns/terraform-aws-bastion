@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.10](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.9...v0.0.10) (2023-10-25)
+
+
+### Miscellaneous Chores
+
+* update bastion role iam permissions for secretsmanager ([37d4e3e](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/37d4e3e0e8dfe3fcbe4aa863678a5c129629b185))
+
 ## [0.0.9](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.8...v0.0.9) (2023-10-19)
 
 
