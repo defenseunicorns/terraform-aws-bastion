@@ -18,6 +18,7 @@ resource "aws_s3_bucket_logging" "access_logging_on_session_logs_bucket" {
 }
 
 resource "aws_s3_bucket_acl" "session_logs_bucket" {
+  # checkov:skip=CKV2_AWS_65:migrate away from this pattern, https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/71
   bucket = aws_s3_bucket.session_logs_bucket.id
   acl    = "private"
 

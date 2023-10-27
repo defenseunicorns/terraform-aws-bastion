@@ -67,9 +67,15 @@ _test-all: _create-folders
 			&& cd ../../test/e2e \
 			&& go test -count 1 -v $(EXTRA_TEST_ARGS) .'
 
-.PHONY: test
-test: ## Run all automated tests. Requires access to an AWS account. Costs real money.
-	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h"
+.PHONY: test-ci-complete
+test-ci-complete: ## Run one test (TestExamplesCompleteCommon). Requires access to an AWS account. Costs real money.
+	$(eval export TF_VAR_region := $(or $(REGION),$(TF_VAR_region),us-east-2))
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 3h -run TestExamplesCompleteCommon"
+
+.PHONY: test-complete-plan-only
+test-complete-plan-only: ## Run one test (TestExamplesCompletePlanOnly). Requires access to an AWS account. It will not cost money or create any resources since it is just running `terraform plan`.
+	$(eval export TF_VAR_region := $(or $(REGION),$(TF_VAR_region),us-east-2))
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h -run TestExamplesCompletePlanOnly"
 
 # Example of how to run a single test only
 #.PHONY: test-complete-foo
