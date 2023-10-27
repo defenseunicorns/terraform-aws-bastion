@@ -70,5 +70,19 @@
       matchDatasources: ["github-tags", "git-tags"],
       versioning: "loose"
     }
-  ]
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "groupName": null,
+    "schedule": [],
+    "dependencyDashboardApproval": false,
+    "minimumReleaseAge": null,
+    "rangeStrategy": "update-lockfile",
+    "commitMessageSuffix": "[SECURITY]",
+    "branchTopic": "{{{datasource}}}-{{{depName}}}-vulnerability",
+    "prCreation": "immediate",
+    "labels": ["security"],
+    "automerge": true,
+    "assignees": ["@defenseunicorns/delivery-aws-iac"]
+  }
 }
