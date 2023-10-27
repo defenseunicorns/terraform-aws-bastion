@@ -1,6 +1,7 @@
 variable "name_prefix" {
   description = "The prefix to use when naming all resources"
   type        = string
+  default     = "ci"
   validation {
     condition     = length(var.name_prefix) <= 20
     error_message = "The name prefix cannot be more than 20 characters"
