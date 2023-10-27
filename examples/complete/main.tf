@@ -18,7 +18,7 @@ locals {
 
 module "vpc" {
   # checkov:skip=CKV_TF_1: "Ensure Terraform module sources use a commit hash" -- We've decided to use tags rather than a hash
-  source = "git::https://github.com/defenseunicorns/terraform-aws-uds-vpc.git?ref=v0.0.5"
+  source = "git::https://github.com/defenseunicorns/terraform-aws-uds-vpc.git?ref=v0.1.1"
 
   name                  = local.vpc_name
   vpc_cidr              = "10.200.0.0/16"
