@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.11](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.10...v0.0.11) (2023-10-27)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#59](https://github.com/defenseunicorns/terraform-aws-uds-bastion/issues/59)) ([8ae7593](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/8ae7593982c0b659396cec69debb4b4d5525fbe5))
+
+
+### Continuous Integration
+
+* update-configs branch from delivery-github-repo-management ([8237ccf](https://github.com/defenseunicorns/terraform-aws-uds-bastion/commit/8237ccfe6395a31d11610f9882bc4b2794302e42))
+
 ## [0.0.10](https://github.com/defenseunicorns/terraform-aws-uds-bastion/compare/v0.0.9...v0.0.10) (2023-10-25)
 
 
