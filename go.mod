@@ -1,4 +1,4 @@
-module github.com/defenseunicorns/terraform-aws-uds-bastion
+module github.com/defenseunicorns/terraform-aws-bastion
 
 go 1.21.1
 
