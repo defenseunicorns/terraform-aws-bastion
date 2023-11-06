@@ -1,6 +1,6 @@
 module github.com/defenseunicorns/terraform-aws-bastion
 
-go 1.21.1
+go 1.21.3
 
 require (
 	github.com/defenseunicorns/delivery_aws_iac_utils v0.0.2
