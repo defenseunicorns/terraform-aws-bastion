@@ -237,6 +237,8 @@ github.com/defenseunicorns/delivery_aws_iac_utils v0.0.2 h1:fpLPt1C8ETciDzCCRacc
 github.com/defenseunicorns/delivery_aws_iac_utils v0.0.2/go.mod h1:BPMBclIPz3/yVD0DGe5JdT01To/M1kzQcWOylrcRZo8=
 github.com/defenseunicorns/delivery_aws_iac_utils v0.0.4 h1:dHUqu18rPE8DDjfdRty26FGuPqbjoQy9Y8p5MQfFIjo=
 github.com/defenseunicorns/delivery_aws_iac_utils v0.0.4/go.mod h1:/h4vVbJmNWlV4+7CET3On2Kr6WEiaYP2XdcoKxVzPDI=
+github.com/defenseunicorns/delivery_aws_iac_utils v0.0.5 h1:P929OMDMn0vowv7OELhB43daHuYIEA5LCKuaC2aB/4w=
+github.com/defenseunicorns/delivery_aws_iac_utils v0.0.5/go.mod h1:1V7jQ7mLgnOQLwOPAAqjgVN6OyKWdPd4s/YdKbrU+Ps=
 github.com/emicklei/go-restful/v3 v3.11.0 h1:rAQeMHw1c7zTmncogyy8VvRZwtkmkZ4FxERmMY4rD+g=
 github.com/emicklei/go-restful/v3 v3.11.0/go.mod h1:6n3XBCmQQb25CM2LCACGz8ukIrRry+4bhvbpWn3mrbc=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
@@ -392,6 +394,8 @@ github.com/gruntwork-io/terratest v0.46.5 h1:cmsIAKjM1Hqwy5tlZPb6EJQvaMCD4xRX1DN
 github.com/gruntwork-io/terratest v0.46.5/go.mod h1:6gI5MlLeyF+SLwqocA5GBzcTix+XiuxCy1BPwKuT+WM=
 github.com/gruntwork-io/terratest v0.46.7 h1:oqGPBBO87SEsvBYaA0R5xOq+Lm2Xc5dmFVfxEolfZeU=
 github.com/gruntwork-io/terratest v0.46.7/go.mod h1:6gI5MlLeyF+SLwqocA5GBzcTix+XiuxCy1BPwKuT+WM=
+github.com/gruntwork-io/terratest v0.46.8 h1:rgK7z6Dy/eMGFaclKR0WVG9Z54tR+Ehl7S09+8Y25j0=
+github.com/gruntwork-io/terratest v0.46.8/go.mod h1:6MxfmOFQQEpQZjpuWRwuAK8qm836hYgAOCzSIZIWTmg=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
