@@ -12,28 +12,28 @@
     using: composite
     steps:
       - name: Init pre-commit cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: "${{ github.workspace }}/.cache/pre-commit"
           key: "pre-commit-${{inputs.check-type}}|${{hashFiles('.tool-versions')}}|${{hashFiles('.pre-commit-config.yaml')}}"
 
       - name: Init gopath cache
         if: inputs.check-type == 'golang'
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: "${{ github.workspace }}/.cache/go"
           key: "gopath|${{hashFiles('.tool-versions')}}|${{hashFiles('go.sum')}}"
 
       - name: Init gobuild cache
         if: inputs.check-type == 'golang'
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: "${{ github.workspace }}/.cache/go-build"
           key: "gobuild|${{hashFiles('.tool-versions')}}|${{hashFiles('go.sum')}}"
 
       - name: Init docker cache
         id: init-docker-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: "${{ github.workspace }}/.cache/docker"
           key: "docker|${{hashFiles('.env')}}"
