@@ -126,6 +126,18 @@ variable "root_volume_config" {
   }
 }
 
+variable "enable_secondary_ebs_volume" {
+  description = "Enable the creation of a secondary EBS volume"
+  type        = bool
+  default     = false
+}
+
+variable "bastion_secondary_ebs_volume_size" {
+  description = "value of the secondary EBS volume size in GB"
+  type        = string
+  default     = "70"
+}
+
 variable "assign_public_ip" {
   description = "Determines if an instance gets a public IP assigned at launch time"
   type        = bool
