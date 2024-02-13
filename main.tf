@@ -160,18 +160,6 @@ data "cloudinit_config" "config" {
   }
 }
 
-variable "root_volume_config" {
-  type = object({
-    volume_type = any
-    volume_size = any
-  })
-  default = {
-    volume_type = "gp3"
-    volume_size = "20"
-  }
-}
-
-
 resource "aws_ebs_volume" "bastion_secondary_ebs_volume" {
   count             = var.enable_secondary_ebs_volume ? 1 : 0
   availability_zone = aws_instance.application.availability_zone
