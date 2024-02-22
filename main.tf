@@ -154,7 +154,7 @@ data "cloudinit_config" "config" {
         ssm_enabled                 = var.ssm_enabled
         ssh_password                = var.ssh_password
         zarf_version                = var.zarf_version
-        ssm_parameter_name          = var.name
+        ssm_parameter_name          = try(aws_ssm_parameter.cloudwatch_configuration_file[0].name, null)
       }
     )
   }

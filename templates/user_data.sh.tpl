@@ -67,7 +67,7 @@ sudo mkdir -p /usr/share/collectd
 sudo touch /usr/share/collectd/types.db
 
 # Fetch the configuration from the SSM parameter store
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux-${ssm_parameter_name} -s
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:${ssm_parameter_name} -s
 
  ###StartUpScript###
 

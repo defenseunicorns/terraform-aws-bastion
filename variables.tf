@@ -176,10 +176,9 @@ variable "enable_log_to_s3" {
   default     = true
 }
 
-variable "enable_log_to_cloudwatch" {
-  description = "Enable Session Manager to Log to CloudWatch Logs"
-  type        = bool
-  default     = true
+variable "log_group_name" {
+  description = "Name of an externally created CloudWatch Log Group to store bastion logs"
+  type        = string
 }
 
 #####################################################

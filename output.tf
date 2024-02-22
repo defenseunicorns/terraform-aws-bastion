@@ -8,6 +8,11 @@ output "private_ip" {
   description = "Private IP"
 }
 
+output "ssm_parameter_name" {
+  value       = try(aws_ssm_parameter.bastion_ssm_parameter[0].name)
+  description = "SSM Parameter Name"
+}
+
 output "private_dns" {
   value       = aws_instance.application.private_dns
   description = "Private DNS"
