@@ -159,3 +159,18 @@ data "cloudinit_config" "config" {
     )
   }
 }
+
+resource "aws_ebs_volume" "bastion_secondary_ebs_volume" {
+  count             = var.enable_secondary_ebs_volume ? 1 : 0
+  availability_zone = aws_instance.application.availability_zone
+  size              = var.bastion_secondary_ebs_volume_size
+  encrypted         = true
+  tags              = var.tags
+}
+
+resource "aws_volume_attachment" "ebs_attachment" {
+  count       = var.enable_secondary_ebs_volume ? 1 : 0
+  device_name = "/dev/sdb"
+  volume_id   = aws_ebs_volume.bastion_secondary_ebs_volume[0].id
+  instance_id = aws_instance.application.id
+}
