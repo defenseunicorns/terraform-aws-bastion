@@ -41,7 +41,7 @@ resource "aws_instance" "application" {
   ami                         = var.ami_id != "" ? var.ami_id : data.aws_ami.from_filter[0].id
   instance_type               = var.instance_type
   vpc_security_group_ids      = length(local.security_group_configs) > 0 ? aws_security_group.sg[*].id : var.security_group_ids
-  user_data                   = data.cloudinit_config.config.rendered
+  user_data                   = var.include_user_data ? data.cloudinit_config.config.rendered : null
   iam_instance_profile        = local.role_name == "" ? null : aws_iam_instance_profile.bastion_ssm_profile.name
   ebs_optimized               = true
   associate_public_ip_address = var.assign_public_ip
