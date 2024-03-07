@@ -268,3 +268,9 @@ variable "enable_bastion_terraform_permissions" {
   type        = bool
   default     = false
 }
+
+variable "include_user_data" {
+  description = "A flag to include user data in the instance"
+  type        = bool
+  default     = true
+}
