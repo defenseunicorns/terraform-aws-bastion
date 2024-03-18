@@ -269,8 +269,13 @@ variable "enable_bastion_terraform_permissions" {
   default     = false
 }
 
-variable "include_user_data" {
-  description = "A flag to include user data in the instance"
-  type        = bool
-  default     = true
+variable "user_data_configuration" {
+  description = "Options include `module`, `user_provided`, `none`. If `module`, the userdata from this module will be included. If `user_provided`, the user must provide the user data. If `none`, no user data will be generated."
+  type        = string
+  default     = "module"
+
+  validation {
+    condition     = contains(["module", "user_provided", "none"], var.user_data_configuration)
+    error_message = "Invalid user data configuration option. Allowed options are `module`, `user_provided`, `none`."
+  }
 }
