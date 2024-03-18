@@ -105,7 +105,6 @@ No modules.
 | <a name="input_enable_secondary_ebs_volume"></a> [enable\_secondary\_ebs\_volume](#input\_enable\_secondary\_ebs\_volume) | Enable the creation of a secondary EBS volume | `bool` | `false` | no |
 | <a name="input_enable_sqs_events_on_bastion_login"></a> [enable\_sqs\_events\_on\_bastion\_login](#input\_enable\_sqs\_events\_on\_bastion\_login) | If true, generates an SQS event whenever an object is created in the Session Logs S3 bucket, which happens whenever someone logs in to the Bastion. | `bool` | `false` | no |
 | <a name="input_eni_attachment_config"></a> [eni\_attachment\_config](#input\_eni\_attachment\_config) | Optional list of enis to attach to instance | <pre>list(object({<br>    network_interface_id = string<br>    device_index         = string<br>  }))</pre> | `null` | no |
-| <a name="input_include_user_data"></a> [include\_user\_data](#input\_include\_user\_data) | A flag to include user data in the instance | `bool` | `true` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type to use for Bastion | `string` | `"m5.large"` | no |
 | <a name="input_kms_key_arn"></a> [kms\_key\_arn](#input\_kms\_key\_arn) | KMS Key ARN to use for encryption | `string` | n/a | yes |
 | <a name="input_linux_shell_profile"></a> [linux\_shell\_profile](#input\_linux\_shell\_profile) | The ShellProfile to use for linux based machines. | `string` | `""` | no |
@@ -127,6 +126,7 @@ No modules.
 | <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | Names of subnets to deploy the instance in | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | `{}` | no |
 | <a name="input_tenancy"></a> [tenancy](#input\_tenancy) | The tenancy of the instance (if the instance is running in a VPC). Valid values are 'default' or 'dedicated'. | `string` | `"default"` | no |
+| <a name="input_user_data_override"></a> [user\_data\_override](#input\_user\_data\_override) | Override the default module user data with your own. This will disable the default user data and use your own. | `string` | `null` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC id | `string` | n/a | yes |
 | <a name="input_windows_shell_profile"></a> [windows\_shell\_profile](#input\_windows\_shell\_profile) | The ShellProfile to use for windows based machines. | `string` | `""` | no |
 | <a name="input_zarf_version"></a> [zarf\_version](#input\_zarf\_version) | The version of Zarf to use | `string` | `""` | no |
