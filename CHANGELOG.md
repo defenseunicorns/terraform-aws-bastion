@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.13](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.12...v0.0.13) (2024-03-19)
+
+
+### Bug Fixes
+
+* add a way to override userdata ([#115](https://github.com/defenseunicorns/terraform-aws-bastion/issues/115)) ([b151cee](https://github.com/defenseunicorns/terraform-aws-bastion/commit/b151cee99f1df0440c60da77ca5b0a3b0525f79c))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#112](https://github.com/defenseunicorns/terraform-aws-bastion/issues/112)) ([77568c0](https://github.com/defenseunicorns/terraform-aws-bastion/commit/77568c0a61c77f7770b9a130ed0437f6fe317f5f))
+* **deps:** update all dependencies ([#114](https://github.com/defenseunicorns/terraform-aws-bastion/issues/114)) ([72438dc](https://github.com/defenseunicorns/terraform-aws-bastion/commit/72438dcab8cb5e0671cc32f2205968a0f43e2acd))
+
 ## [0.0.12](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.11...v0.0.12) (2024-03-07)
 
 
