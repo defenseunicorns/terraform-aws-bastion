@@ -219,6 +219,7 @@ variable "ssm_enabled" {
 variable "ssh_password" {
   description = "Password for SSH access if SSM authentication is enabled"
   type        = string
+  default     = "my-password"
 }
 
 variable "tags" {
