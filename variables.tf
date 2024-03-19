@@ -219,6 +219,7 @@ variable "ssm_enabled" {
 variable "ssh_password" {
   description = "Password for SSH access if SSM authentication is enabled"
   type        = string
+  default     = ""
 }
 
 variable "tags" {
@@ -269,8 +270,8 @@ variable "enable_bastion_terraform_permissions" {
   default     = false
 }
 
-variable "include_user_data" {
-  description = "A flag to include user data in the instance"
-  type        = bool
-  default     = true
+variable "user_data_override" {
+  description = "Override the default module user data with your own. This will disable the default user data and use your own."
+  type        = string
+  default     = null
 }
