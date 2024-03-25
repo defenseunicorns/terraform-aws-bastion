@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.14](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.13...v0.0.14) (2024-03-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#116](https://github.com/defenseunicorns/terraform-aws-bastion/issues/116)) ([c7fa91d](https://github.com/defenseunicorns/terraform-aws-bastion/commit/c7fa91dbbcb3ef7c90357c702b895a12f086cb30))
+
 ## [0.0.13](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.12...v0.0.13) (2024-03-19)
 
 
