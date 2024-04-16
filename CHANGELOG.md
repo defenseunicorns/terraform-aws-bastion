@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.0.14](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.13...v0.0.14) (2024-04-16)
+
+
+### Features
+
+* change secret setting logic ([#121](https://github.com/defenseunicorns/terraform-aws-bastion/issues/121)) ([046e024](https://github.com/defenseunicorns/terraform-aws-bastion/commit/046e024df09f07100db1a1dce3dbf5049d53992c))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#116](https://github.com/defenseunicorns/terraform-aws-bastion/issues/116)) ([c7fa91d](https://github.com/defenseunicorns/terraform-aws-bastion/commit/c7fa91dbbcb3ef7c90357c702b895a12f086cb30))
+* **deps:** update all dependencies ([#118](https://github.com/defenseunicorns/terraform-aws-bastion/issues/118)) ([bc79116](https://github.com/defenseunicorns/terraform-aws-bastion/commit/bc79116f93ce312cf711b7cc85db5950ddea0b05))
+* **deps:** update module golang.org/x/net to v0.23.0 [security] ([#119](https://github.com/defenseunicorns/terraform-aws-bastion/issues/119)) ([c61771e](https://github.com/defenseunicorns/terraform-aws-bastion/commit/c61771ee00039da72040e35d3501b39e9b144583))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.286.0 ([#120](https://github.com/defenseunicorns/terraform-aws-bastion/issues/120)) ([915dcb1](https://github.com/defenseunicorns/terraform-aws-bastion/commit/915dcb1f1486c3441e262367912a4d33f812773d))
+
 ## [0.0.13](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.12...v0.0.13) (2024-03-19)
 
 
