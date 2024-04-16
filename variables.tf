@@ -201,7 +201,7 @@ variable "enable_log_to_cloudwatch" {
 variable "ssh_user" {
   description = "Username to use when accessing the instance using SSH"
   type        = string
-  default     = "ubuntu"
+  default     = "ec2-user"
 }
 
 variable "additional_user_data_script" {
@@ -217,13 +217,25 @@ variable "ssm_enabled" {
 }
 
 variable "ssh_password" {
-  description = "Password for SSH access if SSM authentication is enabled"
+  description = "Password for SSH access if SSM authentication is enabled, optional"
+  type        = string
+  default     = ""
+}
+
+variable "secrets_manager_secret_id" {
+  description = "The ID of the Secrets Manager secret for the bastion to pull from for SSH access if SSM authentication is enabled, optional"
   type        = string
   default     = ""
 }
 
 variable "tags" {
   description = "A map of tags to add to all resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "bastion_instance_tags" {
+  description = "A map of tags to add to the bastion instance"
   type        = map(string)
   default     = {}
 }

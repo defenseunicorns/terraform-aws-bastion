@@ -18,6 +18,9 @@ sudo yum update -y
 ## Enable SSM & SSH
 ##
 
+THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION=${ssh_password}
+SECRETS_MANAGER_SECRET_ID=${secrets_manager_secret_id}
+
 cat <<"__EOF__" > /home/${ssh_user}/.ssh/config
 Host *
     StrictHostKeyChecking no
@@ -31,7 +34,15 @@ then
     sudo sed -i '/PasswordAuthentication no/s/^/#/g' /etc/ssh/sshd_config
     sudo sed -i '/PasswordAuthentication yes/s/^#//g' /etc/ssh/sshd_config
     sudo systemctl restart sshd
-    echo ${ssh_password} | sudo passwd --stdin ec2-user
+    if [[ -n "$${THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION}" ]]
+    then
+        echo "${ssh_user}:$${THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION}" | sudo chpasswd
+    fi
+    if [[ -n "$${SECRETS_MANAGER_SECRET_ID}" ]]
+    then
+        echo "Fetching password from Secrets Manager"
+        aws secretsmanager get-secret-value --secret-id "$${SECRETS_MANAGER_SECRET_ID}" --query SecretString --output text | jq -r '."${ssh_user}"' | sudo passwd --stdin ${ssh_user} && echo "Password set for ${ssh_user} successfully" || echo "Failed to set password for ${ssh_user}"
+    fi
 else
     systemctl disable amazon-ssm-agent
     systemctl stop amazon-ssm-agent
@@ -69,7 +80,7 @@ sudo touch /usr/share/collectd/types.db
 # Fetch the configuration from the SSM parameter store
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux-${ssm_parameter_name} -s
 
- ###StartUpScript###
+###StartUpScript###
 
 sudo cat << '_EOF_' > /etc/profile.d/startupscript.sh
 #!/bin/bash
