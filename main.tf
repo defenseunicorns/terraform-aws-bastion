@@ -148,11 +148,12 @@ data "cloudinit_config" "config" {
         s3_bucket_uri               = "s3://${data.aws_s3_bucket.access_logs_bucket.id}"
         aws_region                  = var.region
         ssh_user                    = var.ssh_user
+        ssh_password                = var.ssh_password
         keys_update_frequency       = local.keys_update_frequency
         enable_hourly_cron_updates  = local.enable_hourly_cron_updates
         additional_user_data_script = var.additional_user_data_script
         ssm_enabled                 = var.ssm_enabled
-        ssh_password                = var.ssh_password
+        secrets_manager_secret_id   = var.secrets_manager_secret_id
         zarf_version                = var.zarf_version
         ssm_parameter_name          = var.name
       }
