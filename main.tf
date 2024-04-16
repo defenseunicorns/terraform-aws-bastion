@@ -62,7 +62,8 @@ resource "aws_instance" "application" {
 
   tags = merge(
     var.tags,
-    { Name = var.name }
+    var.bastion_instance_tags,
+    { Name = var.name },
   )
 }
 

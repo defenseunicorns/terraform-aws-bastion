@@ -96,6 +96,7 @@ No modules.
 | <a name="input_ami_name_filter"></a> [ami\_name\_filter](#input\_ami\_name\_filter) | Filter for AMI using this name. Accepts wildcards | `string` | `""` | no |
 | <a name="input_ami_virtualization_type"></a> [ami\_virtualization\_type](#input\_ami\_virtualization\_type) | Filter for AMI using this virtualization type | `string` | `""` | no |
 | <a name="input_assign_public_ip"></a> [assign\_public\_ip](#input\_assign\_public\_ip) | Determines if an instance gets a public IP assigned at launch time | `bool` | `false` | no |
+| <a name="input_bastion_instance_tags"></a> [bastion\_instance\_tags](#input\_bastion\_instance\_tags) | A map of tags to add to the bastion instance | `map(string)` | `{}` | no |
 | <a name="input_bastion_secondary_ebs_volume_size"></a> [bastion\_secondary\_ebs\_volume\_size](#input\_bastion\_secondary\_ebs\_volume\_size) | value of the secondary EBS volume size in GB | `string` | `"70"` | no |
 | <a name="input_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#input\_cloudwatch\_log\_group\_name) | Name of the CloudWatch Log Group for storing SSM Session Logs | `string` | `"/ssm/session-logs"` | no |
 | <a name="input_cloudwatch_logs_retention"></a> [cloudwatch\_logs\_retention](#input\_cloudwatch\_logs\_retention) | Number of days to retain Session Logs in CloudWatch | `number` | `365` | no |

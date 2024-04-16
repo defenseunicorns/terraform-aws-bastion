@@ -234,6 +234,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "bastion_instance_tags" {
+  description = "A map of tags to add to the bastion instance"
+  type        = map(string)
+  default     = {}
+}
+
 variable "cloudwatch_logs_retention" {
   description = "Number of days to retain Session Logs in CloudWatch"
   type        = number
