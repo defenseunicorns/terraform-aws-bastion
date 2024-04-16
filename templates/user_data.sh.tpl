@@ -36,12 +36,12 @@ then
     sudo systemctl restart sshd
     if [[ -n "$${THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION}" ]]
     then
-        echo "ec2-user:$${THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION}" | sudo chpasswd
+        echo "${ssh_user}:$${THROW_AWAY_PASSWORD_DONT_USE_THIS_IN_PRODUCTION}" | sudo chpasswd
     fi
     if [[ -n "$${SECRETS_MANAGER_SECRET_ID}" ]]
     then
         echo "Fetching password from Secrets Manager"
-        aws secretsmanager get-secret-value --secret-id "$${SECRETS_MANAGER_SECRET_ID}" --query SecretString --output text | jq -r '."ec2-user"' | sudo passwd --stdin ec2-user && echo "Password set for ec2-user successfully" || echo "Failed to set password for ec2-user"
+        aws secretsmanager get-secret-value --secret-id "$${SECRETS_MANAGER_SECRET_ID}" --query SecretString --output text | jq -r '."${ssh_user}"' | sudo passwd --stdin ${ssh_user} && echo "Password set for ${ssh_user} successfully" || echo "Failed to set password for ${ssh_user}"
     fi
 else
     systemctl disable amazon-ssm-agent
