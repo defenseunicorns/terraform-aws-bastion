@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.15](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.14...v0.0.15) (2024-04-17)
+
+
+### Bug Fixes
+
+* ordering of userdata ([#122](https://github.com/defenseunicorns/terraform-aws-bastion/issues/122)) ([6bb8dfd](https://github.com/defenseunicorns/terraform-aws-bastion/commit/6bb8dfdf81c2650f127ecea7a8070314b33d062c))
+
 ## [0.0.14](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.13...v0.0.14) (2024-04-16)
 
 
