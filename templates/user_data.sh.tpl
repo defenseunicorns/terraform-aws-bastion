@@ -14,6 +14,16 @@ sudo yum install -y \
 
 sudo yum update -y
 
+# Install newer version of aws cli
+sudo yum remove awscli -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+sudo chmod -R 755 /usr/local/aws-cli/
+
+export PATH="$PATH:/usr/local/bin"
+echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc
+
 ##
 ## Enable SSM & SSH
 ##
@@ -50,13 +60,6 @@ else
     chmod 600 /home/${ssh_user}/.ssh/config
     chown ${ssh_user}:${ssh_user} /home/${ssh_user}/.ssh/config
 fi
-
-# Install newer version of aws cli
-sudo yum remove awscli -y
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-sudo chmod -R 755 /usr/local/aws-cli/
 
 # Install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
