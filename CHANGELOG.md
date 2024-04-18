@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.16](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.15...v0.0.16) (2024-04-18)
+
+
+### Features
+
+* change cloud-init logging back to default location ([#124](https://github.com/defenseunicorns/terraform-aws-bastion/issues/124)) ([2ee1906](https://github.com/defenseunicorns/terraform-aws-bastion/commit/2ee1906e25db9ac7bdcb1547bae506e7bb1ad1ac))
+
 ## [0.0.15](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.14...v0.0.15) (2024-04-17)
 
 
