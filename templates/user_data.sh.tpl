@@ -1,18 +1,25 @@
 #!/usr/bin/env bash
+set +x
 exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
 
 # TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
 echo "installing tools"
 
-sudo yum install -y \
-  amazon-cloudwatch-agent \
-  docker \
-  git \
-  jq \
-  unzip \
-  wget
-
-sudo yum update -y
+for i in {1..10}; do
+  sudo yum update -y
+  sudo yum install -y \
+    amazon-cloudwatch-agent \
+    docker \
+    git \
+    jq \
+    unzip \
+    wget
+  if [ $? -eq 0 ]; then
+    break
+  else
+    echo "Attempt $i failed. Retrying..."
+  fi
+done
 
 # Install newer version of aws cli
 sudo yum remove awscli -y
