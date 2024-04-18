@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-set +x
-exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&1
+set -x
 
 # TODO: Make this work in more AMIs than just Amazon Linux 2 (for example, on RHEL the amazon-cloudwatch-agent package doesn't exist)
 echo "installing tools"
