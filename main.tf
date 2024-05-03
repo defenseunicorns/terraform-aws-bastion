@@ -28,10 +28,6 @@ data "aws_subnet" "subnet_by_name" {
   }
 }
 
-data "aws_s3_bucket" "access_logs_bucket" {
-  bucket = var.access_logs_bucket_name
-}
-
 data "aws_kms_key" "default" {
   key_id = var.kms_key_arn
 }
@@ -107,32 +103,6 @@ resource "aws_security_group" "sg" {
   }
 }
 
-resource "aws_sqs_queue" "bastion_login_queue" {
-  count                             = var.enable_sqs_events_on_bastion_login ? 1 : 0
-  name                              = local.sqs_queue_name
-  kms_master_key_id                 = data.aws_kms_key.default.arn
-  kms_data_key_reuse_period_seconds = 300
-  visibility_timeout_seconds        = 300
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowSend",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "sqs:SendMessage",
-      "Resource": "arn:${data.aws_partition.current.partition}:sqs:*:*:${local.sqs_queue_name}",
-      "Condition": {
-        "ArnEquals": { "aws:SourceArn": "${data.aws_s3_bucket.access_logs_bucket.arn}" }
-      }
-    }
-  ]
-}
-POLICY
-}
-
 #####################################################
 ##################### user data #####################
 
@@ -145,8 +115,6 @@ data "cloudinit_config" "config" {
 
     content = templatefile("${path.module}/templates/user_data.sh.tpl",
       {
-        s3_bucket_name              = data.aws_s3_bucket.access_logs_bucket.id
-        s3_bucket_uri               = "s3://${data.aws_s3_bucket.access_logs_bucket.id}"
         aws_region                  = var.region
         ssh_user                    = var.ssh_user
         ssh_password                = var.ssh_password
@@ -175,4 +143,32 @@ resource "aws_volume_attachment" "ebs_attachment" {
   device_name = "/dev/sdb"
   volume_id   = aws_ebs_volume.bastion_secondary_ebs_volume[0].id
   instance_id = aws_instance.application.id
+}
+
+resource "aws_ssm_document" "session_manager_prefs" {
+  name            = "${var.name}-SSM-SessionManagerRunShell"
+  document_type   = "Session"
+  document_format = "JSON"
+  tags            = var.tags
+
+
+  content = jsonencode({
+    schemaVersion = "1.0"
+    description   = "Document to hold regional settings for Session Manager"
+    sessionType   = "Standard_Stream"
+    inputs = {
+      runAsEnabled = true
+      kmsKeyId     = data.aws_kms_key.default.id
+      shellProfile = {
+        linux   = var.linux_shell_profile == "" ? var.linux_shell_profile : ""
+        windows = var.windows_shell_profile == "" ? var.windows_shell_profile : ""
+      }
+
+      # send logs to cloudwatch in real time, needs a valid cloudwatch_log_group_name
+      cloudWatchStreamingEnabled  = var.enable_log_to_cloudwatch ? true : false
+      cloudWatchLogGroupName      = var.enable_log_to_cloudwatch ? var.cloudwatch_log_group_name : ""
+      cloudWatchEncryptionEnabled = var.enable_log_to_cloudwatch ? true : false
+
+    }
+  })
 }

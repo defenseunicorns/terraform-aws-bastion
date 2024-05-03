@@ -8,12 +8,9 @@ resource "random_id" "default" {
 
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
-  vpc_name                       = "${var.name_prefix}-${lower(random_id.default.hex)}"
-  bastion_name                   = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
-  access_log_bucket_name_prefix  = "${var.name_prefix}-accesslog-${lower(random_id.default.hex)}"
-  session_log_bucket_name_prefix = "${var.name_prefix}-bastionsessionlog-${lower(random_id.default.hex)}"
-  kms_key_alias_name_prefix      = "alias/${var.name_prefix}-${lower(random_id.default.hex)}"
-  access_log_sqs_queue_name      = "${var.name_prefix}-accesslog-access-${lower(random_id.default.hex)}"
+  vpc_name                  = "${var.name_prefix}-${lower(random_id.default.hex)}"
+  bastion_name              = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
+  kms_key_alias_name_prefix = "alias/${var.name_prefix}-${lower(random_id.default.hex)}"
 }
 
 module "vpc" {
@@ -121,107 +118,6 @@ data "aws_iam_policy_document" "kms_access" {
   }
 }
 
-
-# Create S3 bucket for access logs with versioning, encryption, blocked public access enabled
-resource "aws_s3_bucket" "access_log_bucket" {
-  # checkov:skip=CKV_AWS_144: Cross region replication is overkill
-  # checkov:skip=CKV_AWS_18: "Ensure the S3 bucket has access logging enabled" -- This is the access logging bucket. Logging to the logging bucket would cause an infinite loop.
-  bucket_prefix = local.access_log_bucket_name_prefix
-  force_destroy = true
-  tags          = var.tags
-
-  lifecycle {
-    precondition {
-      condition     = length(local.access_log_bucket_name_prefix) <= 37
-      error_message = "Bucket name prefixes may not be longer than 37 characters."
-    }
-  }
-}
-
-resource "aws_s3_bucket_versioning" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
-
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.default.arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-}
-
-resource "aws_s3_bucket_public_access_block" "access_log_bucket" {
-  bucket                  = aws_s3_bucket.access_log_bucket.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
-resource "aws_s3_bucket_lifecycle_configuration" "access_log_bucket" {
-  bucket = aws_s3_bucket.access_log_bucket.id
-
-  rule {
-    id     = "delete_after_X_days"
-    status = "Enabled"
-
-    expiration {
-      days = var.access_log_expire_days
-    }
-  }
-
-  rule {
-    id     = "abort_incomplete_multipart_upload"
-    status = "Enabled"
-    abort_incomplete_multipart_upload {
-      days_after_initiation = 7
-    }
-  }
-}
-
-resource "aws_sqs_queue" "access_log_queue" {
-  count                             = var.enable_sqs_events_on_access_log_access ? 1 : 0
-  name                              = local.access_log_sqs_queue_name
-  kms_master_key_id                 = aws_kms_key.default.arn
-  kms_data_key_reuse_period_seconds = 300
-  visibility_timeout_seconds        = 300
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowSend",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "sqs:SendMessage",
-      "Resource": "arn:${data.aws_partition.current.partition}:sqs:*:*:${local.access_log_sqs_queue_name}",
-      "Condition": {
-        "ArnEquals": { "aws:SourceArn": "${aws_s3_bucket.access_log_bucket.arn}" }
-      }
-    }
-  ]
-}
-POLICY
-}
-
-resource "aws_s3_bucket_notification" "access_log_bucket_notification" {
-  count  = var.enable_sqs_events_on_access_log_access ? 1 : 0
-  bucket = aws_s3_bucket.access_log_bucket.id
-
-  queue {
-    queue_arn = aws_sqs_queue.access_log_queue[0].arn
-    events    = ["s3:ObjectCreated:*"]
-  }
-}
-
 data "aws_ami" "amazonlinux2" {
   most_recent = true
 
@@ -245,22 +141,22 @@ module "bastion" {
     volume_size = "20"
     encrypted   = true
   }
-  name                           = local.bastion_name
-  vpc_id                         = module.vpc.vpc_id
-  subnet_id                      = module.vpc.private_subnets[0]
-  region                         = var.region
-  access_logs_bucket_name        = aws_s3_bucket.access_log_bucket.id
-  session_log_bucket_name_prefix = local.session_log_bucket_name_prefix
-  kms_key_arn                    = aws_kms_key.default.arn
-  ssh_user                       = var.bastion_ssh_user
-  ssh_password                   = var.bastion_ssh_password
-  assign_public_ip               = false
-  enable_log_to_s3               = true
-  enable_log_to_cloudwatch       = true
-  private_ip                     = var.private_ip != "" ? var.private_ip : null
+  name             = local.bastion_name
+  vpc_id           = module.vpc.vpc_id
+  subnet_id        = module.vpc.private_subnets[0]
+  region           = var.region
+  kms_key_arn      = aws_kms_key.default.arn
+  ssh_user         = var.bastion_ssh_user
+  ssh_password     = var.bastion_ssh_password
+  assign_public_ip = false
+  private_ip       = var.private_ip != "" ? var.private_ip : null
 
   tenancy              = var.bastion_tenancy
   zarf_version         = var.zarf_version
   permissions_boundary = var.iam_role_permissions_boundary
-  tags                 = var.tags
+
+  enable_log_to_cloudwatch  = true
+  cloudwatch_log_group_name = ""
+
+  tags = var.tags
 }
