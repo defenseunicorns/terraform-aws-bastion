@@ -156,7 +156,8 @@ module "bastion" {
   permissions_boundary = var.iam_role_permissions_boundary
 
   enable_log_to_cloudwatch  = true
-  cloudwatch_log_group_name = ""
+  # no need to specify log group name unless you want to override default, it will be created automatically
+  #cloudwatch_log_group_name = "my-cloudwatch-log-group"
 
   tags = var.tags
 }

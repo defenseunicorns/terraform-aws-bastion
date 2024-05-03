@@ -12,29 +12,40 @@ resource "aws_iam_role" "bastion_ssm_role" {
   name                 = local.role_name
   permissions_boundary = var.permissions_boundary
 
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "EC2AssumeRole"
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
         }
+      },
     ]
-}
-EOF
+  })
+
   tags               = var.tags
+}
+
+data "aws_iam_policy_document" "kms_policy" {
+  statement {
+    sid = "KMSEncryptionForSessionManager"
+    actions = [
+      "kms:DescribeKey",
+      "kms:GenerateDataKey",
+      "kms:Decrypt",
+      "kms:Encrypt",
+    ]
+    resources = [data.aws_kms_key.default.arn]
+  }
 }
 
 # Attach AmazonSSMManagedInstanceCore policy to role
 data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
   arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
-
 
 resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-ssm-policy-attach" {
   role       = aws_iam_role.bastion_ssm_role.name
@@ -51,38 +62,27 @@ resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-efs-policy-attach" {
   policy_arn = data.aws_iam_policy.AmazonElasticFileSystemFullAccess.arn
 }
 
-# Create ssm_ec2_access document, policy and attachment
-data "aws_iam_policy_document" "ssm_ec2_access" {
-  statement {
-    sid = "KMSEncryptionForSessionManager"
-    actions = [
-      "kms:DescribeKey",
-      "kms:GenerateDataKey",
-      "kms:Decrypt",
-      "kms:Encrypt",
-    ]
-    resources = [data.aws_kms_key.default.arn]
-  }
-  statement {
-    actions = ["ssm:StartSession"]
-    resources = [
-      "arn:${data.aws_partition.current.partition}:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/${aws_instance.application.id}",
-      "arn:${data.aws_partition.current.partition}:ssm:*:*:document/AWS-StartSSHSession"
-    ]
-  }
+data "aws_iam_policy" "CloudWatchLogsFullAccess" {
+  arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/CloudWatchLogsFullAccess"
 }
+
+resource "aws_iam_role_policy_attachment" "bastion-ssm-s3-cwl-policy-attach" {
+  role       = aws_iam_role.bastion_ssm_role.name
+  policy_arn = data.aws_iam_policy.CloudWatchLogsFullAccess.arn
+}
+
+
 # Create a custom policy for the bastion and attachment
-resource "aws_iam_policy" "ssm_ec2_access" {
+resource "aws_iam_policy" "kms_policy" {
   name   = "ssm-${var.name}-${var.region}"
-  path   = "/"
-  policy = data.aws_iam_policy_document.ssm_ec2_access.json
+  policy = data.aws_iam_policy_document.kms_policy.json
 
   tags = var.tags
 }
 
-resource "aws_iam_role_policy_attachment" "bastion-ssm-ec2-access-policy-attach" {
+resource "aws_iam_role_policy_attachment" "kms_policy_attach" {
   role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.ssm_ec2_access.arn
+  policy_arn = aws_iam_policy.kms_policy.arn
 }
 
 # Create custom policy and attachment

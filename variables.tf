@@ -196,7 +196,7 @@ variable "enable_log_to_cloudwatch" {
 variable "cloudwatch_log_group_name" {
   description = "Name of the CloudWatch Log Group for storing SSM Session Logs"
   type        = string
-  default     = "/ssm/session-logs"
+  default     = "/ssm/bastion-session-logs"
 }
 
 variable "linux_shell_profile" {
