@@ -26,7 +26,7 @@ resource "aws_iam_role" "bastion_ssm_role" {
     ]
   })
 
-  tags               = var.tags
+  tags = var.tags
 }
 
 data "aws_iam_policy_document" "kms_policy" {

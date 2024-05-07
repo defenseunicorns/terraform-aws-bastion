@@ -305,8 +305,8 @@ module "bastion" {
   zarf_version         = var.zarf_version
   permissions_boundary = var.iam_role_permissions_boundary
 
-  enable_log_to_cloudwatch  = true
-  # cloudwatch_log_group_name defaults to /ssm/
+  enable_log_to_cloudwatch = true
+  # cloudwatch_log_group_name defaults to /ssm/bastion-session-logs
   #cloudwatch_log_group_name = "my-cloudwatch-log-group"
 
   tags = var.tags

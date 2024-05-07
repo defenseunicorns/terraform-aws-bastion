@@ -196,7 +196,7 @@ variable "enable_log_to_cloudwatch" {
 variable "cloud_watch_encryption_enabled" {
   description = "Enable CloudWatch Log Encryption"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "cloudwatch_log_group_name" {

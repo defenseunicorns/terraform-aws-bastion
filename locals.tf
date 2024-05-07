@@ -2,8 +2,6 @@ locals {
   role_name                 = "${var.name}-role"
   add_custom_policy_to_role = var.policy_content != null
 
-  sqs_queue_name = "${var.name}-s3-event-notification-queue"
-
   # ssh access
   keys_update_frequency      = "*/5 * * * *"
   enable_hourly_cron_updates = true
