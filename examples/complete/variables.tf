@@ -67,6 +67,12 @@ variable "private_ip" {
   default     = ""
 }
 
+variable "global_cloud_watch_log_group_name" {
+  description = "The name of the global cloudwatch log group"
+  type        = string
+  default     = "global-logs"
+}
+
 variable "cloudwatch_log_retention_days" {
   description = "how long you want to keep the cloudwatch logs (in days)"
   type        = number

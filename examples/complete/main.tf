@@ -146,67 +146,67 @@ resource "aws_ssm_parameter" "cloudwatch_configuration_file" { # Create a cloudw
           "collect_list" : [
             {
               "file_path" : "/root/.bash_history",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "command-history/root-user/{instance_id}", # {instance_id} natively set by agent
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/home/ec2-user/.bash_history",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "command-history/ec2-user/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/home/ssm-user/.bash_history",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "command-history/ssm-user/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/amazon/ssm/amazon-ssm-agent.log",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "logins/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/messages",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/boot.log*",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/secure",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/messages",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/cron*",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/cloud-init-output.log",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
             {
               "file_path" : "/var/log/dmesg",
-              "log_group_name" : aws_cloudwatch_log_group.global-log-group.name,
+              "log_group_name" : var.global_cloud_watch_log_group_name,
               "log_stream_name" : "Syslog/{instance_id}",
               "retention_in_days" : var.cloudwatch_log_retention_days
             },
