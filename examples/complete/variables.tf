@@ -66,3 +66,10 @@ variable "private_ip" {
   type        = string
   default     = ""
 }
+
+variable "cloudwatch_log_retention_days" {
+  description = "how long you want to keep the cloudwatch logs (in days)"
+  type        = number
+  default     = 30
+
+}

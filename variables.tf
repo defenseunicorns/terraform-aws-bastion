@@ -193,6 +193,12 @@ variable "enable_log_to_cloudwatch" {
   default     = false
 }
 
+variable "cloud_watch_encryption_enabled" {
+  description = "Enable CloudWatch Log Encryption"
+  type        = bool
+  default     = false
+}
+
 variable "cloudwatch_log_group_name" {
   description = "Name of the CloudWatch Log Group for storing SSM Session Logs"
   type        = string
