@@ -1,6 +1,3 @@
-data "aws_partition" "current" {}
-
-data "aws_caller_identity" "current" {}
 
 resource "random_id" "default" {
   byte_length = 2
@@ -8,8 +5,8 @@ resource "random_id" "default" {
 
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
-  vpc_name                  = "${var.name_prefix}-${lower(random_id.default.hex)}"
-  bastion_name              = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
+  vpc_name     = "${var.name_prefix}-${lower(random_id.default.hex)}"
+  bastion_name = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
 }
 
 module "vpc" {
@@ -60,6 +57,7 @@ data "aws_ami" "amazonlinux2" {
   owners = ["amazon"]
 }
 
+# This is created in the example and not maintained by the module. The module will read in with user data if it exists.
 resource "aws_ssm_parameter" "cloudwatch_configuration_file" { # Create a cloudwatch agent configuration file that will be used to configure the cloudwatch agent on the bastion host
   # checkov:skip=CKV_AWS_337: "Ensure SSM parameters are using KMS CMK" -- There is no sensitive data in this SSM parameter
 
@@ -238,7 +236,7 @@ module "bastion" {
 
   enable_log_to_cloudwatch = true
   # cloudwatch_log_group_name defaults to /ssm/bastion-session-logs
-  #cloudwatch_log_group_name = "my-cloudwatch-log-group"
+  # cloudwatch_log_group_name = "my-cloudwatch-log-group"
 
   tags = var.tags
 }

@@ -37,12 +37,6 @@ variable "bastion_ssh_user" {
   default     = "ec2-user"
 }
 
-variable "kms_key_deletion_window" {
-  description = "Waiting period for scheduled KMS Key deletion. Can be 7-30 days."
-  type        = number
-  default     = 7
-}
-
 variable "bastion_ssh_password" {
   description = "The SSH password to use for the bastion if SSM authentication is used"
   type        = string
@@ -82,5 +76,5 @@ variable "cloudwatch_log_retention_days" {
 
 variable "aws_kms_key_arn" {
   description = "arn for the key used for cloudwatch logs"
-  type = string
+  type        = string
 }
