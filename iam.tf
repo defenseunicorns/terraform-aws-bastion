@@ -29,19 +29,6 @@ resource "aws_iam_role" "bastion_ssm_role" {
   tags = var.tags
 }
 
-data "aws_iam_policy_document" "kms_policy" {
-  statement {
-    sid = "KMSEncryptionForSessionManager"
-    actions = [
-      "kms:DescribeKey",
-      "kms:GenerateDataKey",
-      "kms:Decrypt",
-      "kms:Encrypt",
-    ]
-    resources = [data.aws_kms_key.default.arn]
-  }
-}
-
 # Attach AmazonSSMManagedInstanceCore policy to role
 data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
   arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
@@ -69,20 +56,6 @@ data "aws_iam_policy" "CloudWatchLogsFullAccess" {
 resource "aws_iam_role_policy_attachment" "bastion-ssm-s3-cwl-policy-attach" {
   role       = aws_iam_role.bastion_ssm_role.name
   policy_arn = data.aws_iam_policy.CloudWatchLogsFullAccess.arn
-}
-
-
-# Create a custom policy for the bastion and attachment
-resource "aws_iam_policy" "kms_policy" {
-  name   = "ssm-${var.name}-${var.region}"
-  policy = data.aws_iam_policy_document.kms_policy.json
-
-  tags = var.tags
-}
-
-resource "aws_iam_role_policy_attachment" "kms_policy_attach" {
-  role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.kms_policy.arn
 }
 
 # Create custom policy and attachment

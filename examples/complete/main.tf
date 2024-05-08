@@ -44,8 +44,6 @@ module "vpc" {
   tags                              = var.tags
 }
 
-
-
 data "aws_ami" "amazonlinux2" {
   most_recent = true
 
@@ -224,7 +222,6 @@ module "bastion" {
   vpc_id           = module.vpc.vpc_id
   subnet_id        = module.vpc.private_subnets[0]
   region           = var.region
-  kms_key_arn      = var.aws_kms_key_arn
   ssh_user         = var.bastion_ssh_user
   ssh_password     = var.bastion_ssh_password
   assign_public_ip = false

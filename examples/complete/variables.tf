@@ -68,13 +68,8 @@ variable "global_cloud_watch_log_group_name" {
 }
 
 variable "cloudwatch_log_retention_days" {
-  description = "how long you want to keep the cloudwatch logs (in days)"
+  description = "How long you want to keep the cloudwatch logs (in days)"
   type        = number
   default     = 30
 
-}
-
-variable "aws_kms_key_arn" {
-  description = "arn for the key used for cloudwatch logs"
-  type        = string
 }

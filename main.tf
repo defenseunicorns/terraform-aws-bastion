@@ -26,10 +26,6 @@ data "aws_subnet" "subnet_by_name" {
   }
 }
 
-data "aws_kms_key" "default" {
-  key_id = var.kms_key_arn
-}
-
 resource "aws_instance" "application" {
   #checkov:skip=CKV2_AWS_41: IAM role is created in the module
   ami                         = var.ami_id != "" ? var.ami_id : data.aws_ami.from_filter[0].id

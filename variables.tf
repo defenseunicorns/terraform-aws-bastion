@@ -10,11 +10,6 @@ variable "vpc_id" {
   description = "VPC id"
 }
 
-variable "kms_key_arn" {
-  type        = string
-  description = "KMS Key ARN to use for encryption"
-}
-
 ### Bastion Module
 
 variable "name" {
