@@ -12,29 +12,27 @@ resource "aws_iam_role" "bastion_ssm_role" {
   name                 = local.role_name
   permissions_boundary = var.permissions_boundary
 
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-               "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "EC2AssumeRole"
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
         }
+      },
     ]
-}
-EOF
-  tags               = var.tags
+  })
+
+  tags = var.tags
 }
 
 # Attach AmazonSSMManagedInstanceCore policy to role
 data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
   arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
-
 
 resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-ssm-policy-attach" {
   role       = aws_iam_role.bastion_ssm_role.name
@@ -51,113 +49,13 @@ resource "aws_iam_role_policy_attachment" "bastion-ssm-aws-efs-policy-attach" {
   policy_arn = data.aws_iam_policy.AmazonElasticFileSystemFullAccess.arn
 }
 
-# Create S3/CloudWatch Logs access document, policy and attach to role
-data "aws_iam_policy_document" "ssm_s3_cwl_access" {
-  # checkov:skip=CKV_AWS_111: ADD REASON
-  # checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions" -- TODO: Make this policy more least-privilege-y
-  # A custom policy for S3 bucket access
-  # https://docs.aws.amazon.com/en_us/systems-manager/latest/userguide/setup-instance-profile.html#instance-profile-custom-s3-policy
-  statement {
-    sid = "S3BucketAccessForSessionManager"
-
-    actions = [
-      "s3:PutObject",
-      "s3:PutObjectAcl",
-      "s3:PutObjectVersionAcl",
-    ]
-
-    resources = [
-      aws_s3_bucket.session_logs_bucket.arn,
-      "${aws_s3_bucket.session_logs_bucket.arn}/*",
-    ]
-  }
-
-  statement {
-    sid = "S3EncryptionForSessionManager"
-
-    actions = [
-      "s3:GetEncryptionConfiguration",
-    ]
-
-    resources = [
-      aws_s3_bucket.session_logs_bucket.arn
-    ]
-  }
-
-  # A custom policy for CloudWatch Logs access
-  # https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/permissions-reference-cwl.html
-  statement {
-    sid = "CloudWatchLogsAccessForSessionManager"
-
-    actions = [
-      "logs:PutLogEvents",
-      "logs:CreateLogStream",
-      "logs:DescribeLogGroups",
-      "logs:DescribeLogStreams",
-    ]
-
-    resources = ["*"]
-  }
-
-  statement {
-    sid = "KMSEncryptionForSessionManager"
-
-    actions = [
-      "kms:DescribeKey",
-      "kms:GenerateDataKey",
-      "kms:Decrypt",
-      "kms:Encrypt",
-    ]
-
-    resources = [data.aws_kms_key.default.arn]
-  }
-}
-
-resource "aws_iam_policy" "ssm_s3_cwl_access" {
-  name   = "${var.name}-ssm_s3_cwl_access-${var.region}"
-  path   = "/"
-  policy = data.aws_iam_policy_document.ssm_s3_cwl_access.json
-
-  tags = var.tags
+data "aws_iam_policy" "CloudWatchLogsFullAccess" {
+  arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/CloudWatchLogsFullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "bastion-ssm-s3-cwl-policy-attach" {
   role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.ssm_s3_cwl_access.arn
-}
-
-# Create ssm_ec2_access document, policy and attachment
-data "aws_iam_policy_document" "ssm_ec2_access" {
-  statement {
-    sid = "KMSEncryptionForSessionManager"
-    actions = [
-      "kms:DescribeKey",
-      "kms:GenerateDataKey",
-      "kms:Decrypt",
-      "kms:Encrypt",
-    ]
-    resources = [data.aws_kms_key.default.arn]
-  }
-  statement {
-    actions = ["ssm:StartSession"]
-    resources = [
-      "arn:${data.aws_partition.current.partition}:ec2:${var.region}:${data.aws_caller_identity.current.account_id}:instance/${aws_instance.application.id}",
-      "arn:${data.aws_partition.current.partition}:ssm:*:*:document/AWS-StartSSHSession"
-    ]
-  }
-}
-# Create a custom policy for the bastion and attachment
-resource "aws_iam_policy" "ssm_ec2_access" {
-  name   = "ssm-${var.name}-${var.region}"
-  path   = "/"
-  policy = data.aws_iam_policy_document.ssm_ec2_access.json
-
-  tags = var.tags
-}
-
-resource "aws_iam_role_policy_attachment" "bastion-ssm-ec2-access-policy-attach" {
-  role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.ssm_ec2_access.arn
+  policy_arn = data.aws_iam_policy.CloudWatchLogsFullAccess.arn
 }
 
 # Create custom policy and attachment
@@ -183,65 +81,6 @@ resource "aws_iam_role_policy_attachment" "managed" {
   count      = length(var.policy_arns)
   role       = aws_iam_role.bastion_ssm_role.name
   policy_arn = var.policy_arns[count.index]
-}
-
-# S3 readonly policy and attachment
-resource "aws_iam_role_policy_attachment" "s3_companion_cube" {
-  role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.s3_readonly_policy.arn
-}
-
-resource "aws_iam_policy" "s3_readonly_policy" {
-  name   = "${var.name}-s3-readonly"
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:ListBucket",
-                "s3:GetObject"
-            ],
-            "Resource": [
-              "${aws_s3_bucket.session_logs_bucket.arn}/*",
-              "${aws_s3_bucket.session_logs_bucket.arn}"
-            ]
-        }
-    ]
-}
-EOF
-  tags   = var.tags
-}
-
-# S3 logging policy and attachment
-resource "aws_iam_role_policy_attachment" "s3_logging_cube" {
-  role       = aws_iam_role.bastion_ssm_role.name
-  policy_arn = aws_iam_policy.s3_logging_policy.arn
-}
-
-resource "aws_iam_policy" "s3_logging_policy" {
-  name   = "${var.name}-s3-logging"
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "s3:ListBucket",
-              "s3:GetObject",
-              "s3:PutObject"
-            ],
-            "Resource": [
-              "${data.aws_s3_bucket.access_logs_bucket.arn}/*",
-              "${data.aws_s3_bucket.access_logs_bucket.arn}"
-            ]
-        }
-    ]
-}
-EOF
-  tags   = var.tags
 }
 
 # Terraform policy and attachment

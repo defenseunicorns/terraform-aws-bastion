@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 data "aws_region" "current" {}
 
 data "aws_partition" "current" {}
@@ -26,14 +24,6 @@ data "aws_subnet" "subnet_by_name" {
   tags = {
     Name : var.subnet_name
   }
-}
-
-data "aws_s3_bucket" "access_logs_bucket" {
-  bucket = var.access_logs_bucket_name
-}
-
-data "aws_kms_key" "default" {
-  key_id = var.kms_key_arn
 }
 
 resource "aws_instance" "application" {
@@ -107,32 +97,6 @@ resource "aws_security_group" "sg" {
   }
 }
 
-resource "aws_sqs_queue" "bastion_login_queue" {
-  count                             = var.enable_sqs_events_on_bastion_login ? 1 : 0
-  name                              = local.sqs_queue_name
-  kms_master_key_id                 = data.aws_kms_key.default.arn
-  kms_data_key_reuse_period_seconds = 300
-  visibility_timeout_seconds        = 300
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowSend",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "sqs:SendMessage",
-      "Resource": "arn:${data.aws_partition.current.partition}:sqs:*:*:${local.sqs_queue_name}",
-      "Condition": {
-        "ArnEquals": { "aws:SourceArn": "${data.aws_s3_bucket.access_logs_bucket.arn}" }
-      }
-    }
-  ]
-}
-POLICY
-}
-
 #####################################################
 ##################### user data #####################
 
@@ -145,8 +109,6 @@ data "cloudinit_config" "config" {
 
     content = templatefile("${path.module}/templates/user_data.sh.tpl",
       {
-        s3_bucket_name              = data.aws_s3_bucket.access_logs_bucket.id
-        s3_bucket_uri               = "s3://${data.aws_s3_bucket.access_logs_bucket.id}"
         aws_region                  = var.region
         ssh_user                    = var.ssh_user
         ssh_password                = var.ssh_password
@@ -157,6 +119,7 @@ data "cloudinit_config" "config" {
         secrets_manager_secret_id   = var.secrets_manager_secret_id
         zarf_version                = var.zarf_version
         ssm_parameter_name          = var.name
+        enable_log_to_cloudwatch    = var.enable_log_to_cloudwatch
       }
     )
   }

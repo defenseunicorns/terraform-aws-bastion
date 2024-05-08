@@ -10,28 +10,6 @@ variable "vpc_id" {
   description = "VPC id"
 }
 
-variable "kms_key_arn" {
-  type        = string
-  description = "KMS Key ARN to use for encryption"
-}
-
-variable "access_logs_bucket_name" {
-  type        = string
-  description = "Name of S3 bucket to use to store access logs"
-}
-
-variable "access_logs_target_prefix" {
-  type        = string
-  description = "Prefix for all log object keys for the access log."
-  default     = "bastion-session-logs/"
-}
-
-variable "enable_sqs_events_on_bastion_login" {
-  description = "If true, generates an SQS event whenever an object is created in the Session Logs S3 bucket, which happens whenever someone logs in to the Bastion."
-  type        = bool
-  default     = false
-}
-
 ### Bastion Module
 
 variable "name" {
@@ -159,44 +137,8 @@ variable "permissions_boundary" {
   default     = null
 }
 
-#### S3 Bucket
-
-variable "session_log_bucket_name_prefix" {
-  description = "Name prefix of S3 bucket to store session logs"
-  type        = string
-  validation {
-    condition     = length(var.session_log_bucket_name_prefix) <= 37
-    error_message = "Bucket name prefixes may not be longer than 37 characters."
-  }
-}
-
-variable "log_archive_days" {
-  description = "Number of days to wait before archiving to Glacier"
-  type        = number
-  default     = 30
-}
-
-variable "log_expire_days" {
-  description = "Number of days to wait before deleting"
-  type        = number
-  default     = 365
-}
-
-variable "enable_log_to_s3" {
-  description = "Enable Session Manager to Log to S3"
-  type        = bool
-  default     = true
-}
-
-variable "enable_log_to_cloudwatch" {
-  description = "Enable Session Manager to Log to CloudWatch Logs"
-  type        = bool
-  default     = true
-}
-
 #####################################################
 ##################### user data #####################
-
 
 variable "ssh_user" {
   description = "Username to use when accessing the instance using SSH"
@@ -240,28 +182,10 @@ variable "bastion_instance_tags" {
   default     = {}
 }
 
-variable "cloudwatch_logs_retention" {
-  description = "Number of days to retain Session Logs in CloudWatch"
-  type        = number
-  default     = 365
-}
-
-variable "cloudwatch_log_group_name" {
-  description = "Name of the CloudWatch Log Group for storing SSM Session Logs"
-  type        = string
-  default     = "/ssm/session-logs"
-}
-
-variable "linux_shell_profile" {
-  description = "The ShellProfile to use for linux based machines."
-  default     = ""
-  type        = string
-}
-
-variable "windows_shell_profile" {
-  description = "The ShellProfile to use for windows based machines."
-  default     = ""
-  type        = string
+variable "enable_log_to_cloudwatch" {
+  description = "Enable Session Manager to Log to CloudWatch Logs"
+  type        = bool
+  default     = false
 }
 
 variable "tenancy" {
