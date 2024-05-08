@@ -86,8 +86,12 @@ chown -R ${ssh_user}:${ssh_user} /home/${ssh_user}/
 sudo mkdir -p /usr/share/collectd
 sudo touch /usr/share/collectd/types.db
 
-# Fetch the configuration from the SSM parameter store
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux-${ssm_parameter_name} -s
+if [ "${enable_log_to_cloudwatch}" = "true" ]; then
+  if aws ssm get-parameter --name "AmazonCloudWatch-linux-${ssm_parameter_name}" --output text &> /dev/null; then
+    # Fetch the configuration from the SSM parameter store
+    sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux-${ssm_parameter_name} -s
+  fi
+fi
 
 ###StartUpScript###
 

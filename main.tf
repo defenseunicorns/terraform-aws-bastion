@@ -123,6 +123,7 @@ data "cloudinit_config" "config" {
         secrets_manager_secret_id   = var.secrets_manager_secret_id
         zarf_version                = var.zarf_version
         ssm_parameter_name          = var.name
+        enable_log_to_cloudwatch    = var.enable_log_to_cloudwatch
       }
     )
   }

@@ -193,30 +193,6 @@ variable "enable_log_to_cloudwatch" {
   default     = false
 }
 
-variable "cloud_watch_encryption_enabled" {
-  description = "Enable CloudWatch Log Encryption"
-  type        = bool
-  default     = true
-}
-
-variable "cloudwatch_log_group_name" {
-  description = "Name of the CloudWatch Log Group for storing SSM Session Logs"
-  type        = string
-  default     = "/ssm/bastion-session-logs"
-}
-
-variable "linux_shell_profile" {
-  description = "The ShellProfile to use for linux based machines."
-  default     = ""
-  type        = string
-}
-
-variable "windows_shell_profile" {
-  description = "The ShellProfile to use for windows based machines."
-  default     = ""
-  type        = string
-}
-
 variable "tenancy" {
   description = "The tenancy of the instance (if the instance is running in a VPC). Valid values are 'default' or 'dedicated'."
   type        = string

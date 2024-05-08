@@ -47,7 +47,6 @@ No modules.
 | [aws_instance.application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_network_interface_attachment.attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface_attachment) | resource |
 | [aws_security_group.sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_ssm_document.session_manager_prefs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_document) | resource |
 | [aws_volume_attachment.ebs_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment) | resource |
 | [aws_ami.from_filter](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_iam_policy.AmazonElasticFileSystemFullAccess](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
@@ -73,15 +72,12 @@ No modules.
 | <a name="input_assign_public_ip"></a> [assign\_public\_ip](#input\_assign\_public\_ip) | Determines if an instance gets a public IP assigned at launch time | `bool` | `false` | no |
 | <a name="input_bastion_instance_tags"></a> [bastion\_instance\_tags](#input\_bastion\_instance\_tags) | A map of tags to add to the bastion instance | `map(string)` | `{}` | no |
 | <a name="input_bastion_secondary_ebs_volume_size"></a> [bastion\_secondary\_ebs\_volume\_size](#input\_bastion\_secondary\_ebs\_volume\_size) | value of the secondary EBS volume size in GB | `string` | `"70"` | no |
-| <a name="input_cloud_watch_encryption_enabled"></a> [cloud\_watch\_encryption\_enabled](#input\_cloud\_watch\_encryption\_enabled) | Enable CloudWatch Log Encryption | `bool` | `true` | no |
-| <a name="input_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#input\_cloudwatch\_log\_group\_name) | Name of the CloudWatch Log Group for storing SSM Session Logs | `string` | `"/ssm/bastion-session-logs"` | no |
 | <a name="input_enable_bastion_terraform_permissions"></a> [enable\_bastion\_terraform\_permissions](#input\_enable\_bastion\_terraform\_permissions) | Enable Terraform permissions for Bastion | `bool` | `false` | no |
 | <a name="input_enable_log_to_cloudwatch"></a> [enable\_log\_to\_cloudwatch](#input\_enable\_log\_to\_cloudwatch) | Enable Session Manager to Log to CloudWatch Logs | `bool` | `false` | no |
 | <a name="input_enable_secondary_ebs_volume"></a> [enable\_secondary\_ebs\_volume](#input\_enable\_secondary\_ebs\_volume) | Enable the creation of a secondary EBS volume | `bool` | `false` | no |
 | <a name="input_eni_attachment_config"></a> [eni\_attachment\_config](#input\_eni\_attachment\_config) | Optional list of enis to attach to instance | <pre>list(object({<br>    network_interface_id = string<br>    device_index         = string<br>  }))</pre> | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type to use for Bastion | `string` | `"m5.large"` | no |
 | <a name="input_kms_key_arn"></a> [kms\_key\_arn](#input\_kms\_key\_arn) | KMS Key ARN to use for encryption | `string` | n/a | yes |
-| <a name="input_linux_shell_profile"></a> [linux\_shell\_profile](#input\_linux\_shell\_profile) | The ShellProfile to use for linux based machines. | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of Bastion | `string` | n/a | yes |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | (Optional) The ARN of the policy that is used to set the permissions boundary for the role. | `string` | `null` | no |
 | <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | List of IAM policy ARNs to attach to the instance profile | `list(string)` | `[]` | no |
@@ -100,7 +96,6 @@ No modules.
 | <a name="input_tenancy"></a> [tenancy](#input\_tenancy) | The tenancy of the instance (if the instance is running in a VPC). Valid values are 'default' or 'dedicated'. | `string` | `"default"` | no |
 | <a name="input_user_data_override"></a> [user\_data\_override](#input\_user\_data\_override) | Override the default module user data with your own. This will disable the default user data and use your own. | `string` | `null` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC id | `string` | n/a | yes |
-| <a name="input_windows_shell_profile"></a> [windows\_shell\_profile](#input\_windows\_shell\_profile) | The ShellProfile to use for windows based machines. | `string` | `""` | no |
 | <a name="input_zarf_version"></a> [zarf\_version](#input\_zarf\_version) | The version of Zarf to use | `string` | `""` | no |
 
 ## Outputs
