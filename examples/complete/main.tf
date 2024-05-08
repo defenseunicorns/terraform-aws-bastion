@@ -10,7 +10,6 @@ locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name                  = "${var.name_prefix}-${lower(random_id.default.hex)}"
   bastion_name              = "${var.name_prefix}-bastion-${lower(random_id.default.hex)}"
-  kms_key_alias_name_prefix = "alias/${var.name_prefix}-${lower(random_id.default.hex)}"
 }
 
 module "vpc" {
@@ -48,75 +47,7 @@ module "vpc" {
   tags                              = var.tags
 }
 
-# Create a KMS key and corresponding alias. This KMS key will be used whenever encryption is needed in creating this infrastructure deployment
-resource "aws_kms_key" "default" {
-  description             = "SSM Key"
-  deletion_window_in_days = var.kms_key_deletion_window
-  enable_key_rotation     = true
-  policy                  = data.aws_iam_policy_document.kms_access.json
-  tags                    = var.tags
-  multi_region            = true
-}
 
-resource "aws_kms_alias" "default" {
-  name_prefix   = local.kms_key_alias_name_prefix
-  target_key_id = aws_kms_key.default.key_id
-}
-
-# Create custom policy for KMS
-data "aws_iam_policy_document" "kms_access" {
-  # checkov:skip=CKV_AWS_111: todo reduce perms on key
-  # checkov:skip=CKV_AWS_109: todo be more specific with resources
-  # checkov:skip=CKV_AWS_356: "Ensure no IAM policies documents allow "*" as a statement's resource for restrictable actions" -- TODO: Be more specific with resources
-  statement {
-    sid = "KMS Key Default"
-    principals {
-      type = "AWS"
-      identifiers = [
-        "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"
-      ]
-    }
-
-    actions = [
-      "kms:*",
-    ]
-
-    resources = ["*"]
-  }
-  statement {
-    sid = "CloudWatchLogsEncryption"
-    principals {
-      type        = "Service"
-      identifiers = ["logs.${var.region}.amazonaws.com"]
-    }
-    actions = [
-      "kms:Encrypt*",
-      "kms:Decrypt*",
-      "kms:ReEncrypt*",
-      "kms:GenerateDataKey*",
-      "kms:Describe*",
-    ]
-
-    resources = ["*"]
-  }
-  statement {
-    sid = "Cloudtrail KMS permissions"
-    principals {
-      type = "Service"
-      identifiers = [
-        "cloudtrail.amazonaws.com"
-      ]
-    }
-    actions = [
-      "kms:Encrypt*",
-      "kms:Decrypt*",
-      "kms:ReEncrypt*",
-      "kms:GenerateDataKey*",
-      "kms:Describe*",
-    ]
-    resources = ["*"]
-  }
-}
 
 data "aws_ami" "amazonlinux2" {
   most_recent = true
@@ -295,7 +226,7 @@ module "bastion" {
   vpc_id           = module.vpc.vpc_id
   subnet_id        = module.vpc.private_subnets[0]
   region           = var.region
-  kms_key_arn      = aws_kms_key.default.arn
+  kms_key_arn      = var.aws_kms_key_arn
   ssh_user         = var.bastion_ssh_user
   ssh_password     = var.bastion_ssh_password
   assign_public_ip = false

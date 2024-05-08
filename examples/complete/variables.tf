@@ -79,3 +79,8 @@ variable "cloudwatch_log_retention_days" {
   default     = 30
 
 }
+
+variable "aws_kms_key_arn" {
+  description = "arn for the key used for cloudwatch logs"
+  type = string
+}
