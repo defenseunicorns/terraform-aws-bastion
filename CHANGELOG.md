@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.0.17](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.16...v0.0.17) (2024-06-04)
+
+
+### Bug Fixes
+
+* Made SSM and SSH connections configurable and installing UDS cli ([#137](https://github.com/defenseunicorns/terraform-aws-bastion/issues/137)) ([2651cad](https://github.com/defenseunicorns/terraform-aws-bastion/commit/2651cadc34874c595a5fa8e0ad234c97c4ec2b46))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#126](https://github.com/defenseunicorns/terraform-aws-bastion/issues/126)) ([35c335f](https://github.com/defenseunicorns/terraform-aws-bastion/commit/35c335f24bffc3b31dd13e2c12ac01f85bbe4999))
+* **deps:** update all dependencies ([#129](https://github.com/defenseunicorns/terraform-aws-bastion/issues/129)) ([49835a6](https://github.com/defenseunicorns/terraform-aws-bastion/commit/49835a6a8cc00682544cd9a83d7e10bde7a23d26))
+* **deps:** update all dependencies ([#132](https://github.com/defenseunicorns/terraform-aws-bastion/issues/132)) ([03ab0da](https://github.com/defenseunicorns/terraform-aws-bastion/commit/03ab0da2f715efd0dd3ebc510338694d8edcb20e))
+* **deps:** update all dependencies ([#133](https://github.com/defenseunicorns/terraform-aws-bastion/issues/133)) ([8674dc9](https://github.com/defenseunicorns/terraform-aws-bastion/commit/8674dc9302571d8b68a2bc66d940082b0fb91d4c))
+* **deps:** update all dependencies ([#134](https://github.com/defenseunicorns/terraform-aws-bastion/issues/134)) ([f56643c](https://github.com/defenseunicorns/terraform-aws-bastion/commit/f56643cea42c56c8fe18e8fd24afd787a4ed609b))
+* **deps:** update all dependencies ([#135](https://github.com/defenseunicorns/terraform-aws-bastion/issues/135)) ([a2460c7](https://github.com/defenseunicorns/terraform-aws-bastion/commit/a2460c786312b6f73abd334c2d61f30e403fe66d))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.316.2 ([#128](https://github.com/defenseunicorns/terraform-aws-bastion/issues/128)) ([19f5623](https://github.com/defenseunicorns/terraform-aws-bastion/commit/19f562355235d19168f189ff33dbca5a69c91a4e))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.327.2 ([#130](https://github.com/defenseunicorns/terraform-aws-bastion/issues/130)) ([bfe385b](https://github.com/defenseunicorns/terraform-aws-bastion/commit/bfe385b19be8e7d6181ddbeb154b103f57ce734d))
+
+
+### Code Refactoring
+
+* decouple s3 bucket logic from bastion and handle session streaming to CloudWatch ([#131](https://github.com/defenseunicorns/terraform-aws-bastion/issues/131)) ([7b8b4b2](https://github.com/defenseunicorns/terraform-aws-bastion/commit/7b8b4b287a5a2b4a9b3ddc7072b6a02c2df9a74f))
+
 ## [0.0.16](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.15...v0.0.16) (2024-04-18)
 
 
