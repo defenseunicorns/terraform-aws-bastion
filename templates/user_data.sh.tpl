@@ -82,6 +82,11 @@ cp /home/${ssh_user}/zarf /usr/bin/zarf
 cp /home/${ssh_user}/zarf-init-amd64-${zarf_version}.tar.zst /usr/bin/zarf-init-amd64-${zarf_version}.tar.zst
 chown -R ${ssh_user}:${ssh_user} /home/${ssh_user}/
 
+# Download uds binary
+wget -O /home/${ssh_user}/uds https://github.com/defenseunicorns/uds-cli/releases/download/${uds_cli_version}/uds-cli_${uds_cli_version}_Linux_amd64
+chmod +x /home/${ssh_user}/uds
+cp /home/${ssh_user}/uds /usr/bin/uds
+
 # Create the /usr/share/collectd directory and types.db file
 sudo mkdir -p /usr/share/collectd
 sudo touch /usr/share/collectd/types.db
@@ -104,9 +109,9 @@ sudo cat << '_EOF_' > /etc/profile.d/startupscript.sh
     ###Script to check if exceeded maximum Session Manager Sessions and takes action
     {
         ###Configuration Options
-        MAX_SESSIONS=1  #Number of maximum sessions allowed
+        MAX_SESSIONS=${max_ssm_connections}  #Number of maximum sessions allowed
         TERMINATE_SESSIONS=true #This will terminate the sessions starting from the oldest; if set to false, it will list out the sessions IDs, but not terminate them
-        TERMINATE_OLDEST=false #true/false - if true, script will terminate the oldest session first. if false, the newest session will be terminated.
+        TERMINATE_OLDEST=${terminate_oldest_ssm_connection_first} #true/false - if true, script will terminate the oldest session first. if false, the newest session will be terminated.
         #Terminating the newest session may result in poor experiance as there will be no message provided to the user.
 
 
@@ -239,7 +244,7 @@ LoginGraceTime 15m
 #PermitRootLogin yes
 StrictModes yes
 MaxAuthTries 3
-MaxSessions 1
+MaxSessions ${max_ssh_sessions}
 MaxStartups 1:100:100
 #PubkeyAuthentication yes
 
