@@ -199,6 +199,11 @@ variable "zarf_version" {
   type        = string
   default     = ""
 }
+variable "uds_cli_version" {
+  description = "The version of UDS CLI to use"
+  type        = string
+  default     = "v0.11.0"
+}
 
 variable "enable_bastion_terraform_permissions" {
   description = "Enable Terraform permissions for Bastion"
@@ -210,4 +215,20 @@ variable "user_data_override" {
   description = "Override the default module user data with your own. This will disable the default user data and use your own."
   type        = string
   default     = null
+}
+
+variable "max_ssm_connections" {
+  description = "Maximum number of simultaneous connections that SSM will allow"
+  type        = number
+  default     = 1
+}
+variable "max_ssh_sessions" {
+  description = "Maximum number of ssh connections that are allowed"
+  type        = number
+  default     = 1
+}
+variable "terminate_oldest_ssm_connection_first" {
+  description = "Determines how the SSM connections will be terminated. If true then oldest connection will terminate first. Defaults to false"
+  type        = bool
+  default     = false
 }

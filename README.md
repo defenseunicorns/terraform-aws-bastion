@@ -73,6 +73,8 @@ No modules.
 | <a name="input_enable_secondary_ebs_volume"></a> [enable\_secondary\_ebs\_volume](#input\_enable\_secondary\_ebs\_volume) | Enable the creation of a secondary EBS volume | `bool` | `false` | no |
 | <a name="input_eni_attachment_config"></a> [eni\_attachment\_config](#input\_eni\_attachment\_config) | Optional list of enis to attach to instance | <pre>list(object({<br>    network_interface_id = string<br>    device_index         = string<br>  }))</pre> | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type to use for Bastion | `string` | `"m5.large"` | no |
+| <a name="input_max_ssh_sessions"></a> [max\_ssh\_sessions](#input\_max\_ssh\_sessions) | Maximum number of ssh connections that are allowed | `number` | `1` | no |
+| <a name="input_max_ssm_connections"></a> [max\_ssm\_connections](#input\_max\_ssm\_connections) | Maximum number of simultaneous connections that SSM will allow | `number` | `1` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of Bastion | `string` | n/a | yes |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | (Optional) The ARN of the policy that is used to set the permissions boundary for the role. | `string` | `null` | no |
 | <a name="input_policy_arns"></a> [policy\_arns](#input\_policy\_arns) | List of IAM policy ARNs to attach to the instance profile | `list(string)` | `[]` | no |
@@ -89,6 +91,8 @@ No modules.
 | <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | Names of subnets to deploy the instance in | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | `{}` | no |
 | <a name="input_tenancy"></a> [tenancy](#input\_tenancy) | The tenancy of the instance (if the instance is running in a VPC). Valid values are 'default' or 'dedicated'. | `string` | `"default"` | no |
+| <a name="input_terminate_oldest_ssm_connection_first"></a> [terminate\_oldest\_ssm\_connection\_first](#input\_terminate\_oldest\_ssm\_connection\_first) | Determines how the SSM connections will be terminated. If true then oldest connection will terminate first. Defaults to false | `bool` | `false` | no |
+| <a name="input_uds_cli_version"></a> [uds\_cli\_version](#input\_uds\_cli\_version) | The version of UDS CLI to use | `string` | `"v0.11.0"` | no |
 | <a name="input_user_data_override"></a> [user\_data\_override](#input\_user\_data\_override) | Override the default module user data with your own. This will disable the default user data and use your own. | `string` | `null` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | VPC id | `string` | n/a | yes |
 | <a name="input_zarf_version"></a> [zarf\_version](#input\_zarf\_version) | The version of Zarf to use | `string` | `""` | no |
