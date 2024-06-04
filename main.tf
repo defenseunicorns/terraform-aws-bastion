@@ -109,17 +109,21 @@ data "cloudinit_config" "config" {
 
     content = templatefile("${path.module}/templates/user_data.sh.tpl",
       {
-        aws_region                  = var.region
-        ssh_user                    = var.ssh_user
-        ssh_password                = var.ssh_password
-        keys_update_frequency       = local.keys_update_frequency
-        enable_hourly_cron_updates  = local.enable_hourly_cron_updates
-        additional_user_data_script = var.additional_user_data_script
-        ssm_enabled                 = var.ssm_enabled
-        secrets_manager_secret_id   = var.secrets_manager_secret_id
-        zarf_version                = var.zarf_version
-        ssm_parameter_name          = var.name
-        enable_log_to_cloudwatch    = var.enable_log_to_cloudwatch
+        aws_region                            = var.region
+        ssh_user                              = var.ssh_user
+        ssh_password                          = var.ssh_password
+        keys_update_frequency                 = local.keys_update_frequency
+        enable_hourly_cron_updates            = local.enable_hourly_cron_updates
+        additional_user_data_script           = var.additional_user_data_script
+        ssm_enabled                           = var.ssm_enabled
+        secrets_manager_secret_id             = var.secrets_manager_secret_id
+        zarf_version                          = var.zarf_version
+        uds_cli_version                       = var.uds_cli_version
+        ssm_parameter_name                    = var.name
+        enable_log_to_cloudwatch              = var.enable_log_to_cloudwatch
+        max_ssm_connections                   = var.max_ssm_connections
+        terminate_oldest_ssm_connection_first = var.terminate_oldest_ssm_connection_first
+        max_ssh_sessions                      = var.max_ssh_sessions
       }
     )
   }
