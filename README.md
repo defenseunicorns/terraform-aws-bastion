@@ -6,7 +6,7 @@ This repository contains Terraform configuration files that create an AWS EC2 in
 
 To view examples for how you can leverage this Bastion, please see the [examples](https://github.com/defenseunicorns/terraform-aws-bastion/tree/main/examples) directory.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGINNING OF PRE-COMMIT-OPENTOFU DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
@@ -110,4 +110,4 @@ No modules.
 | <a name="output_public_ip"></a> [public\_ip](#output\_public\_ip) | Public IP |
 | <a name="output_region"></a> [region](#output\_region) | Region the bastion was deployed to |
 | <a name="output_security_group_ids"></a> [security\_group\_ids](#output\_security\_group\_ids) | Security Group Ids |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END OF PRE-COMMIT-OPENTOFU DOCS HOOK -->
