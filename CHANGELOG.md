@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.0.18](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.17...v0.0.18) (2024-06-24)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#138](https://github.com/defenseunicorns/terraform-aws-bastion/issues/138)) ([4922c0b](https://github.com/defenseunicorns/terraform-aws-bastion/commit/4922c0bd2087b0ccfa243d8295a08820648bec5d))
+* **deps:** update all dependencies ([#140](https://github.com/defenseunicorns/terraform-aws-bastion/issues/140)) ([9dbf9a5](https://github.com/defenseunicorns/terraform-aws-bastion/commit/9dbf9a57aa96536d66f894858529cf42945be227))
+* **deps:** update all dependencies ([#144](https://github.com/defenseunicorns/terraform-aws-bastion/issues/144)) ([14763da](https://github.com/defenseunicorns/terraform-aws-bastion/commit/14763dacdeb4a16ecfe47ffeb6379b7a1bf0437a))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.415.0 ([#145](https://github.com/defenseunicorns/terraform-aws-bastion/issues/145)) ([b370b05](https://github.com/defenseunicorns/terraform-aws-bastion/commit/b370b0552272599cb369cc8714b57392cd750def))
+* tofu migration ([#143](https://github.com/defenseunicorns/terraform-aws-bastion/issues/143)) ([c44d1b4](https://github.com/defenseunicorns/terraform-aws-bastion/commit/c44d1b4f09e31f391ff7d45fdcd6138f6d0e586f))
+
 ## [0.0.17](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.16...v0.0.17) (2024-06-04)
 
 
