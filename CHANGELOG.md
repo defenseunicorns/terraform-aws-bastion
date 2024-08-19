@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.0.18](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.17...v0.0.18) (2024-08-19)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#138](https://github.com/defenseunicorns/terraform-aws-bastion/issues/138)) ([4922c0b](https://github.com/defenseunicorns/terraform-aws-bastion/commit/4922c0bd2087b0ccfa243d8295a08820648bec5d))
+* **deps:** update all dependencies ([#140](https://github.com/defenseunicorns/terraform-aws-bastion/issues/140)) ([9dbf9a5](https://github.com/defenseunicorns/terraform-aws-bastion/commit/9dbf9a57aa96536d66f894858529cf42945be227))
+* **deps:** update all dependencies ([#144](https://github.com/defenseunicorns/terraform-aws-bastion/issues/144)) ([14763da](https://github.com/defenseunicorns/terraform-aws-bastion/commit/14763dacdeb4a16ecfe47ffeb6379b7a1bf0437a))
+* **deps:** update all dependencies ([#147](https://github.com/defenseunicorns/terraform-aws-bastion/issues/147)) ([7dc1b6d](https://github.com/defenseunicorns/terraform-aws-bastion/commit/7dc1b6d60d5f3ba41e8e512967bff1b2fb7cba18))
+* **deps:** update all dependencies ([#148](https://github.com/defenseunicorns/terraform-aws-bastion/issues/148)) ([1665fba](https://github.com/defenseunicorns/terraform-aws-bastion/commit/1665fba7eb4b67368b0d6fe85deb0b6ab4030dcb))
+* **deps:** update all dependencies ([#150](https://github.com/defenseunicorns/terraform-aws-bastion/issues/150)) ([32a4156](https://github.com/defenseunicorns/terraform-aws-bastion/commit/32a4156f55780d79fc5026fe9bad541e132a073d))
+* **deps:** update all dependencies ([#151](https://github.com/defenseunicorns/terraform-aws-bastion/issues/151)) ([dd675b0](https://github.com/defenseunicorns/terraform-aws-bastion/commit/dd675b0e32c099dd1a400d26ca3afca0e3ce1cf3))
+* **deps:** update all dependencies ([#152](https://github.com/defenseunicorns/terraform-aws-bastion/issues/152)) ([ee15cf6](https://github.com/defenseunicorns/terraform-aws-bastion/commit/ee15cf66e69dbc249559cababe17d006bd01c3f1))
+* **deps:** update all dependencies ([#156](https://github.com/defenseunicorns/terraform-aws-bastion/issues/156)) ([96536ff](https://github.com/defenseunicorns/terraform-aws-bastion/commit/96536ff9684904b1d18b021b737ebe5cd5c7f554))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.415.0 ([#145](https://github.com/defenseunicorns/terraform-aws-bastion/issues/145)) ([b370b05](https://github.com/defenseunicorns/terraform-aws-bastion/commit/b370b0552272599cb369cc8714b57392cd750def))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.431.5 ([#149](https://github.com/defenseunicorns/terraform-aws-bastion/issues/149)) ([5ea2af5](https://github.com/defenseunicorns/terraform-aws-bastion/commit/5ea2af5e25c7128d539dcd68bfa9b6d7dd82b0de))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v38.18.14 ([#153](https://github.com/defenseunicorns/terraform-aws-bastion/issues/153)) ([138a348](https://github.com/defenseunicorns/terraform-aws-bastion/commit/138a348341440a13776a61c644d5bd9640ab5899))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v38.25.0 ([#154](https://github.com/defenseunicorns/terraform-aws-bastion/issues/154)) ([19a6f4e](https://github.com/defenseunicorns/terraform-aws-bastion/commit/19a6f4e6bb3f2a07b0f87ff17b7c675e0ffca187))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v38.25.1 ([#155](https://github.com/defenseunicorns/terraform-aws-bastion/issues/155)) ([93910fd](https://github.com/defenseunicorns/terraform-aws-bastion/commit/93910fd69bc42c4323bd618c8a93b3911f2fea86))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v38.40.1 ([#157](https://github.com/defenseunicorns/terraform-aws-bastion/issues/157)) ([bcc399b](https://github.com/defenseunicorns/terraform-aws-bastion/commit/bcc399bad5e633c8127e80fb2df2698e88a5137c))
+* tofu migration ([#143](https://github.com/defenseunicorns/terraform-aws-bastion/issues/143)) ([c44d1b4](https://github.com/defenseunicorns/terraform-aws-bastion/commit/c44d1b4f09e31f391ff7d45fdcd6138f6d0e586f))
+
 ## [0.0.17](https://github.com/defenseunicorns/terraform-aws-bastion/compare/v0.0.16...v0.0.17) (2024-06-04)
 
 
