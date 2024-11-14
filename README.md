@@ -71,7 +71,7 @@ No modules.
 | <a name="input_enable_bastion_terraform_permissions"></a> [enable\_bastion\_terraform\_permissions](#input\_enable\_bastion\_terraform\_permissions) | Enable Terraform permissions for Bastion | `bool` | `false` | no |
 | <a name="input_enable_log_to_cloudwatch"></a> [enable\_log\_to\_cloudwatch](#input\_enable\_log\_to\_cloudwatch) | Enable Session Manager to Log to CloudWatch Logs | `bool` | `false` | no |
 | <a name="input_enable_secondary_ebs_volume"></a> [enable\_secondary\_ebs\_volume](#input\_enable\_secondary\_ebs\_volume) | Enable the creation of a secondary EBS volume | `bool` | `false` | no |
-| <a name="input_eni_attachment_config"></a> [eni\_attachment\_config](#input\_eni\_attachment\_config) | Optional list of enis to attach to instance | <pre>list(object({<br>    network_interface_id = string<br>    device_index         = string<br>  }))</pre> | `null` | no |
+| <a name="input_eni_attachment_config"></a> [eni\_attachment\_config](#input\_eni\_attachment\_config) | Optional list of enis to attach to instance | <pre>list(object({<br/>    network_interface_id = string<br/>    device_index         = string<br/>  }))</pre> | `null` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Instance type to use for Bastion | `string` | `"m5.large"` | no |
 | <a name="input_max_ssh_sessions"></a> [max\_ssh\_sessions](#input\_max\_ssh\_sessions) | Maximum number of ssh connections that are allowed | `number` | `1` | no |
 | <a name="input_max_ssm_connections"></a> [max\_ssm\_connections](#input\_max\_ssm\_connections) | Maximum number of simultaneous connections that SSM will allow | `number` | `1` | no |
@@ -81,7 +81,7 @@ No modules.
 | <a name="input_policy_content"></a> [policy\_content](#input\_policy\_content) | JSON IAM Policy body. Use this to add a custom policy to your instance profile (Optional) | `string` | `null` | no |
 | <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip) | The private IP address to assign to the bastion | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | n/a | yes |
-| <a name="input_root_volume_config"></a> [root\_volume\_config](#input\_root\_volume\_config) | n/a | <pre>object({<br>    volume_type = any<br>    volume_size = any<br>  })</pre> | <pre>{<br>  "volume_size": "20",<br>  "volume_type": "gp3"<br>}</pre> | no |
+| <a name="input_root_volume_config"></a> [root\_volume\_config](#input\_root\_volume\_config) | n/a | <pre>object({<br/>    volume_type = any<br/>    volume_size = any<br/>  })</pre> | <pre>{<br/>  "volume_size": "20",<br/>  "volume_type": "gp3"<br/>}</pre> | no |
 | <a name="input_secrets_manager_secret_id"></a> [secrets\_manager\_secret\_id](#input\_secrets\_manager\_secret\_id) | The ID of the Secrets Manager secret for the bastion to pull from for SSH access if SSM authentication is enabled, optional | `string` | `""` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | List of security groups to associate with instance | `list(any)` | `[]` | no |
 | <a name="input_ssh_password"></a> [ssh\_password](#input\_ssh\_password) | Password for SSH access if SSM authentication is enabled, optional | `string` | `""` | no |
