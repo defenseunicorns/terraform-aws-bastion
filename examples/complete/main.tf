@@ -11,7 +11,7 @@ locals {
 
 module "vpc" {
   # checkov:skip=CKV_TF_1: "Ensure Terraform module sources use a commit hash" -- We've decided to use tags rather than a hash
-  source = "git::https://github.com/defenseunicorns/terraform-aws-vpc.git?ref=v0.1.11"
+  source = "git::https://github.com/defenseunicorns/terraform-aws-vpc.git?ref=v0.1.12"
 
   name                  = local.vpc_name
   vpc_cidr              = "10.200.0.0/16"
@@ -24,8 +24,6 @@ module "vpc" {
   single_nat_gateway    = true
   enable_nat_gateway    = true
   private_subnet_tags = {
-    # Needed if you are deploying EKS v1.14 or earlier to this VPC. Not needed for EKS v1.15+.
-    "kubernetes.io/cluster/my-cluster" = "owned"
     # Needed if you are using EKS with the AWS Load Balancer Controller v2.1.1 or earlier. Not needed if you are using a version of the Load Balancer Controller later than v2.1.1.
     "kubernetes.io/cluster/my-cluster" = "shared"
     # Needed if you are deploying EKS and load balancers to private subnets.
