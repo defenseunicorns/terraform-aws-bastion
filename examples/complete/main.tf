@@ -24,8 +24,6 @@ module "vpc" {
   single_nat_gateway    = true
   enable_nat_gateway    = true
   private_subnet_tags = {
-    # Needed if you are deploying EKS v1.14 or earlier to this VPC. Not needed for EKS v1.15+.
-    "kubernetes.io/cluster/my-cluster" = "owned"
     # Needed if you are using EKS with the AWS Load Balancer Controller v2.1.1 or earlier. Not needed if you are using a version of the Load Balancer Controller later than v2.1.1.
     "kubernetes.io/cluster/my-cluster" = "shared"
     # Needed if you are deploying EKS and load balancers to private subnets.
