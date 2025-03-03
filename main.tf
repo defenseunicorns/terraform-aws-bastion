@@ -135,6 +135,10 @@ resource "aws_ebs_volume" "bastion_secondary_ebs_volume" {
   size              = var.bastion_secondary_ebs_volume_size
   encrypted         = true
   tags              = var.tags
+
+  lifecycle {
+    ignore_changes = [availability_zone]
+  }
 }
 
 resource "aws_volume_attachment" "ebs_attachment" {
