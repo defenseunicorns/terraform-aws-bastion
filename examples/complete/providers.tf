@@ -11,3 +11,11 @@ terraform {
     }
   }
 }
+
+provider "aws" {
+  default_tags {
+    tags = {
+      PermissionsBoundary = "uds_permissions_boundary"
+    }
+  }
+}
