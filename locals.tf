@@ -6,7 +6,9 @@ locals {
   keys_update_frequency      = "*/5 * * * *"
   enable_hourly_cron_updates = true
 
-  security_group_configs = [{
+  use_builtin_sg = length(var.security_group_ids) == 0
+
+  security_group_configs = local.use_builtin_sg ? [{
     name        = "${var.name}-sg"
     description = "SG for ${var.name}"
     vpc_id      = var.vpc_id
@@ -16,7 +18,7 @@ locals {
       protocol    = "tcp"
       cidr_blocks = var.allowed_public_ips # admin IPs or private IP (internal) of Software Defined Perimeter
       description = "SSH access"
-      },
+      }
     ]
     egress_rules = [{
       from_port   = 0
@@ -25,5 +27,5 @@ locals {
       cidr_blocks = ["0.0.0.0/0"]
       description = "Allow all outbound traffic"
     }]
-  }]
+  }] : []
 }
