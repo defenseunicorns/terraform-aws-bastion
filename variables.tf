@@ -97,10 +97,14 @@ variable "root_volume_config" {
   type = object({
     volume_type = any
     volume_size = any
+    iops        = number
+    throughput  = number
   })
   default = {
     volume_type = "gp3"
     volume_size = "20"
+    iops = "8000"
+    throughput = "500"
   }
 }
 
