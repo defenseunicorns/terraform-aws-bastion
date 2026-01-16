@@ -97,6 +97,9 @@ variable "root_volume_config" {
   type = object({
     volume_type = any
     volume_size = any
+    encrypted   = bool
+    iops        = optional(number)
+    throughput  = optional(number)
   })
   default = {
     volume_type = "gp3"
