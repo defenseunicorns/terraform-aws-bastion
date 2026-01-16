@@ -97,7 +97,6 @@ variable "root_volume_config" {
   type = object({
     volume_type = any
     volume_size = any
-    encrypted   = bool
     iops        = number
     throughput  = number
   })
