@@ -98,12 +98,14 @@ variable "root_volume_config" {
     volume_type = any
     volume_size = any
     encrypted   = bool
-    iops        = optional(number)
-    throughput  = optional(number)
+    iops        = number
+    throughput  = number
   })
   default = {
     volume_type = "gp3"
     volume_size = "20"
+    iops = "gp3"
+    throughput = "20"
   }
 }
 
