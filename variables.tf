@@ -104,8 +104,8 @@ variable "root_volume_config" {
   default = {
     volume_type = "gp3"
     volume_size = "20"
-    iops = "gp3"
-    throughput = "20"
+    iops = "8000"
+    throughput = "500"
   }
 }
 
