@@ -42,8 +42,8 @@ resource "aws_instance" "application" {
     volume_size = var.root_volume_config.volume_size
     volume_type = var.root_volume_config.volume_type
     encrypted   = true
-    iops       = try(var.root_volume_config.iops, null)
-    throughput = try(var.root_volume_config.throughput, null)
+    iops        = var.root_volume_config.iops
+    throughput  = var.root_volume_config.throughput
   }
   metadata_options {
     http_tokens   = "required"
